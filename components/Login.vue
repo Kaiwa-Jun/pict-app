@@ -94,3 +94,5 @@ export default {
   border: solid 1px black;
 }
 </style>
+
+<!--ユーザーネームの表示-->
