@@ -7,13 +7,18 @@
      <v-btn text @click="signOut">ログアウト</v-btn>
     </p>
    -->
+   <app-footer/>
   </v-app>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import AppFooter from '~/components/Footer.vue'
 
 export default {
+ components: {
+   AppFooter
+ },
  computed: {
    user () {
      return this.$store.getters['user']

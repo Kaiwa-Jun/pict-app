@@ -79,17 +79,23 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer
+    <!-- <app-footer /> -->
+    <!-- <v-footer
       :absolute="!fixed"
       app
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
 <script>
+import AppFooter from '~/components/Footer.vue'
+
 export default {
+  components: {
+    AppFooter
+  },
   data () {
     return {
       clipped: false,
@@ -118,7 +124,7 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: '新規作成',
+          title: '投稿の追加',
           to: '/pictures/create'
         },
         {
