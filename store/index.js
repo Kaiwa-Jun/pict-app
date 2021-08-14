@@ -4,6 +4,7 @@ export const state = () => ({
  user: {
    uid: '',
    email: '',
+   name: '',
    login: false,
  },
 })
@@ -35,10 +36,21 @@ export const actions = {
  checkLogin ({ commit }) {
    firebase.auth().onAuthStateChanged(function (user) {
      if (user) {
-       commit('getData', { uid: user.uid, email: user.email })
+       commit('getData', { uid: user.uid, email: user.email, name: user.displayName })
        commit('switchLogin')
      }
    })
+ },
+ update ({ context }, name) {
+  firebase.auth().currentUser.updateProfile({
+    displayName: name
+  })
+    .then(()=> {
+      console.log('Update successful')
+    })
+    .catch((error)=> {
+      console.log(error)
+    })
  },
  signOut() {
   firebase.auth().onAuthStateChanged(user => {
@@ -53,7 +65,7 @@ export const actions = {
         console.log(`ログアウト時にエラーが発生しました (${error})`);
       });
   });
-},
+ },
  register ({ dispatch, commit }, payload) {
   firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
   .then(user => {

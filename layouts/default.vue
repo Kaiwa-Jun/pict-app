@@ -98,12 +98,32 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'ホーム',
           to: '/'
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
+          to: '/inspire'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'タイムライン',
+          to: '/pictures'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'マイページ',
+          to: '/mypage'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: '新規作成',
+          to: '/pictures/create'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'お問い合わせ',
           to: '/inspire'
         }
       ],

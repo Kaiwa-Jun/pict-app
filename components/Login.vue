@@ -1,13 +1,16 @@
 <template>
  <div class="login">
-   <p
-     v-if="user.login"
-     class="text"
-   >
-     {{ user }}
-   </p>
+   <!-- ユーザー情報表示 -->
+   <p>uid: {{ user.uid }}</p>
+   <p>email: {{ user.email }}</p>
+   <p>login: {{ user.login }}</p>  
+   <p>user.name: {{ user.name }}</p>  
+     
+   <!-- 表示名のアップデート -->
+   <input class="updateform" v-model="updateName" type="text">
+   <v-btn @click="update">update</v-btn>
+
    <form
-     v-else
      class="form"
      @submit.prevent
    >
@@ -64,24 +67,30 @@ export default {
    return {
      email: '',
      password: '',
+     updateName: '',
    }
  },
  methods : {
    login (email, password) {
      this.$store.dispatch('login', {email: this.email, password: this.password})
-     this.$router.push('/pictures')
+     this.$router.push('/')
    },
    loginGoogle () {
      this.$store.dispatch('loginGoogle')
-     this.$router.push('/pictures')
+     this.$router.push('/')
    },
-
+   update (){
+     this.$store.dispatch('update', this.updateName)
+   },
  }
 }
 </script>
 
 <style>
 .input{
+  border: solid 1px black;
+}
+.updateform {
   border: solid 1px black;
 }
 </style>

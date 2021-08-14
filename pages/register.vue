@@ -54,7 +54,7 @@ export default {
  methods: {
    register () {
      this.$store.dispatch('register', {email: this.email, password: this.password})
-     
+     this.$router.push('/')
    }
  },
 }
