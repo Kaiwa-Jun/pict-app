@@ -48,8 +48,12 @@
       >
         <v-icon>mdi-minus</v-icon>
       </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title v-text="title" /> <!--Vuetifyの文字部分-->
       <v-spacer />
+       <p v-if="user.login" class="text" >
+         <v-btn text @click="signOut">ログアウト</v-btn>
+       </p>
+      
       <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
@@ -80,19 +84,28 @@
       </v-list>
     </v-navigation-drawer>
     <!-- <app-footer /> -->
-    <!-- <v-footer
+    <v-footer
       :absolute="!fixed"
       app
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer> -->
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 import AppFooter from '~/components/Footer.vue'
+import { mapActions } from 'vuex'
 
 export default {
+  computed: {
+    user () {
+      return this.$store.getters['user']
+    },
+  },
+  methods: {
+   ...mapActions(['signOut'])
+  },
   components: {
     AppFooter
   },

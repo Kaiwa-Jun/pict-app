@@ -1,10 +1,6 @@
 <template>
  <div class="page">
    <Login />
-   <p v-if="user.login" class="text" >
-     ログインに成功！
-     <v-btn text @click="signOut">ログアウト</v-btn>
-   </p>
  </div>
 </template>
 
