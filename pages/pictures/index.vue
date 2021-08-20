@@ -1,23 +1,21 @@
 <template>
   <v-app>
-    <v-toolbar>一覧画面</v-toolbar>
-
-<!-- ログイン後にログアウトボタン -->
-    <!-- <p v-if="user.login" class="text" >
-     <v-btn text @click="signOut">ログアウト</v-btn>
-    </p>
-   -->
-   <app-footer/>
+      <pictures />
+    <v-footer>
+      <app-footer/>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import AppFooter from '~/components/Footer.vue'
+import Pictures from '~/components/Posts.vue'
 
 export default {
  components: {
-   AppFooter
+   AppFooter,
+   Pictures
  },
  computed: {
    user () {

@@ -14,4 +14,9 @@ firebase.initializeApp({
 })
 }
 
-export default firebase 
+const db = firebase.firestore()
+
+export {
+  firebase ,
+  db
+}
