@@ -54,11 +54,8 @@
          <v-btn text @click="signOut">ログアウト</v-btn>
        </p>
       
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
+      <v-btn @click="toCreate">
+        <v-icon>mdi-image-plus</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
@@ -66,7 +63,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
+    <!-- <v-navigation-drawer
       v-model="rightDrawer"
       :right="right"
       temporary
@@ -82,7 +79,7 @@
           <v-list-item-title>Switch drawer (click me)</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
     <!-- <app-footer /> -->
     <v-footer
       :absolute="!fixed"
@@ -104,7 +101,10 @@ export default {
     },
   },
   methods: {
-   ...mapActions(['signOut'])
+   ...mapActions(['signOut']),
+   toCreate () {
+     this.$router.push('/pictures/create')
+   },
   },
   components: {
     AppFooter
