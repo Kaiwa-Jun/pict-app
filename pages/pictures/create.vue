@@ -3,14 +3,12 @@
     <header>
       <h1>新規投稿</h1>
     </header>
-    <div class="modal">
+    <div v-if="modalVisible" class="modal">
       <div class="actions">
-        <div class="back-btn">
+        <!-- <div class="back-btn" @click="modalVisible = false">
           <img src="/images/back.svg">
-        </div>
-        <div class="post-btn" @click="post">
-          post
-        </div>
+        </div> -->
+       
       </div>
       <div class="modal_content">
         <div class="post-image">
@@ -32,6 +30,9 @@
           v-model="text"
         >
         </el-input>
+         <div class="post-btn" @click="post">
+          post
+        </div>
       </div>
     </div>
     <!-- <div class="text-center">
@@ -92,6 +93,7 @@ export default {
       dialog: false,
       imageUrl: null,
       text: null,
+      modalVisible: true,
     }
   },
   methods: {
@@ -101,7 +103,11 @@ export default {
         image: this.imageUrl,
         createdAt: new Date().getTime()
       })
+      this.modalVisible = false
+      this.text = null
+      this.imageUrl = null
       window.alert('保存されました')
+      this.$router.push('/pictures')
     },
     async uploadFile(data){
       const storageRef = firebase.storage().ref()

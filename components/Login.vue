@@ -1,64 +1,104 @@
 <template>
  <div class="login">
-   <!-- ユーザー情報表示 -->
-   <p>uid: {{ user.uid }}</p>
-   <p>email: {{ user.email }}</p>
-   <p>login: {{ user.login }}</p>  
-   <p>user.name: {{ user.name }}</p>  
      
-   <!-- 表示名のアップデート -->
-   <input class="updateform" v-model="updateName" type="text">
-   <v-btn @click="update">update</v-btn>
+   <v-container>
+     <v-row justify="center">
+       <v-col sm="12" md="5">
+         <h2 class="text-center subtitle-1 font-weight-bold mb-2">
+           メールアドレスでログイン
+         </h2>
+         <v-row>
+           <v-col>
+             <v-tabs
+              v-model="tab"
+              background-color="transparent"
+              color="blue accent-2"
+              grow
+              class="mb-3"
+              >
+               <v-tab to="/">ログイン</v-tab>
+               <v-tab to="/register">アカウント登録</v-tab>
+             </v-tabs>
 
-   <form
-     class="form"
-     @submit.prevent
-   >
-     <label class="label">
-       <span class="label">
-         email
-       </span>
-       <input
-         class="input"
-         type="text"
-         v-model="email"
-       >
-     </label>
-     <label class="label">
-       <span class="label">
-         password
-       </span>
-       <input
-         class="input"
-         type="password"
-         v-model="password"
-       >
-     </label>
-     <v-btn
-       class="button"
-       type="submit"
-       @click="login"
-     >
-       Login
-     </v-btn>
+             <v-row>
+               <v-col sm="12">
+               <v-card flat>
+                 <v-card-text class="pa-0">
+                   <v-form
+                    ref="login_form"
+                    v-model="login_valid"
+                    lazy-validation
+                   >
+                     <v-text-field
+                      v-model="email"
+                      label="メールアドレス"
+                      lazy-validation
+                     />
+                     <v-text-field
+                      v-model="password"
+                      label="パスワード"
+                      required
+                      :append-icon="
+                        show_loginpassword
+                          ? 'mdi-eye'
+                          : 'mdi-eye-off'
+                      "
+                      :type="
+                        show_loginpassword
+                          ? 'text'
+                          : 'password'
+                      "
+                      @click:append="
+                        show_loginpassword = !show_loginpassword
+                      "
+                     />
+                     <v-btn
+                      :disabled="!login_valid"
+                      color="blue darken-3"
+                      class="my-4 white--text"
+                      @click="login"
+                     >
+                      ログイン
+                     </v-btn>
+                   </v-form>
+                 </v-card-text>
+               </v-card>
+               </v-col>
+             </v-row>
+             <v-divider class="my-8"/>
+               <v-row>
+                 <v-col sm="12">
+                   <h2 class="text-center subtitle-1 font-weight-bold mb-2">
+                     その他のアカウントでログイン
+                   </h2>
+                 </v-col>
+               </v-row>
+               <v-alert
+                v-if="socialLoginErrorMsg"
+                dense
+                text
+                type="error"
+                dismissible
+               >
+                {{ socialLoginErrorMsg }} 
+               </v-alert>
+           </v-col>
+         </v-row>
+       </v-col>
+     </v-row>
+  <p>uid: {{ user.uid }}</p>
+  <p>email: {{ user.email }}</p>
+  <p>login: {{ user.login }}</p>  
+  <p>user.name: {{ user.name }}</p>  
+   </v-container>
 
-     <v-btn
-       class="button"
-       type="submit"
-       @click="loginGoogle"
-    >
-       googleでログイン
-    </v-btn>
-    <v-btn color="primary" to="/register">
-      新規登録はこちら
-    </v-btn>
-   </form>
+
  </div>
 </template>
 
 <script>
 export default {
- computed: {
+  computed: {
    user () {
      return this.$store.getters['user']
    },
@@ -68,16 +108,21 @@ export default {
      email: '',
      password: '',
      updateName: '',
+     tab: null,
+     login_valid: true,
+     show_loginpassword:false,
+     loginErrorMsg: '',
+     socialLoginErrorMsg: '',
    }
  },
  methods : {
    login (email, password) {
      this.$store.dispatch('login', {email: this.email, password: this.password})
-     this.$router.push('/')
+     this.$router.push('/') //ログイン後は/picturesに飛ばす？
    },
    loginGoogle () {
      this.$store.dispatch('loginGoogle')
-     this.$router.push('/')
+     this.$router.push('/') //ログイン後は/picturesに飛ばす？
    },
    update (){
      this.$store.dispatch('update', this.updateName)
@@ -94,5 +139,3 @@ export default {
   border: solid 1px black;
 }
 </style>
-
-<!--ユーザーネームの表示-->

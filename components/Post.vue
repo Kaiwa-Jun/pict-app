@@ -2,20 +2,20 @@
   <div>
    <div class="posts">
      <div class="post">
-       <v-row class="user" align-content="center">
-         <v-col class="avatar">
+       <div class="user" align-content="center">
+         <div class="avatar">
            <v-avatar color="primary" size="40">
              <span class="white--text">i</span>
            </v-avatar>
            <!-- <a><img src="/images/post1.jpg" class="w-8 h-8 rounded-full" alt=""></a> -->
-         </v-col>
-         <v-col class="user-name">
+         </div>
+         <div class="user-name">
            <p v-if="user">{{ user.displayName }}</p>
-         </v-col>
-       </v-row>
+         </div>
+       </div>
 
        <div class="post-image">
-         <img src="/images/img1.jpg" alt="">
+         <img :src="post.image" alt="">
        </div>
        <!-- <div class="actions my-2 ml-4 flex">
          <img src='/images/heart.svg' class="w-6 mr-3">
@@ -58,6 +58,20 @@ export default {
 </script>
 
 <style scoped>
+/* .user {
+  float: left;
+  width: 40%;
+} */
+.avatar {
+  float: left;
+  width: 5%;
+  
+}
+.user-name {
+  width: 15%;
+  padding-top: 10px;
+}
+
 
 .post {
   text-align: center;
@@ -68,6 +82,7 @@ export default {
 }
 .message {
   width: 70%;
-  
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

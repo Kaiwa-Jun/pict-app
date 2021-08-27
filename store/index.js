@@ -26,7 +26,7 @@ export const actions = {
        })
  },
  loginGoogle ({ dispatch }) {
-  var provider = new firebase.auth.GoogleAuthProvider()
+  const provider = new firebase.auth.GoogleAuthProvider()
   firebase.auth().signInWithPopup(provider).then(function (result) {
     dispatch('checkLogin')
   }).catch(function (error) {
