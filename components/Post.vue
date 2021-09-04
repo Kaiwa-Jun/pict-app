@@ -19,11 +19,11 @@
        </div>
          <v-toolbar v-if="post" prominent width="70%">
            <div class="actions my-2 ml-4 flex">
-              <img v-if="beLiked" src='/images/heart_active.svg' class="w-6 mr-3 ">
-              <img v-else src='/images/heart.svg' class="w-6 mr-3 ">
-              <p>0</p>
+              <img v-if="beLiked" @click="unlike" src='/images/heart_active.svg' class="w-6 mr-3 ">
+              <img v-else @click="like" src='/images/heart.svg' class="w-6 mr-3 ">
+              <p>{{ likeCount }}</p>
            </div>
-           <div class="message">
+           <div class="message"> 
               <p class="mt-10">{{ post.text }}</p>
               <p class="mt-10">{{ createdAt | datetime }}</p>
            </div>
@@ -44,16 +44,32 @@ export default {
       user: {
         displayName: 'kaiwa7124'
       },
+      likeCount: 0,
       beLiked: false
     }
   },
-  // methods: {
-  //   async like () {
-  //     const likeRef = db.collection('posts').doc(this.post.id).collection('likes')
-  //     await likeRef.doc(this.currentUser.uid).set({ uid: this.currentUser.uid})
-  //     this.beLiked = true
-  //   }
-  // },
+  mounted() {
+    this.likeRef = db.collection('posts').doc(this.post.id).collection('likes')
+    this.checkLikeStatus()
+
+    this.likeRef.onSnapshot((snap) => {
+      this.likeCount = snap.size
+    })
+  },
+  methods: {
+    async like () {
+      await this.likeRef.doc(this.currentUser.uid).set({ uid: this.currentUser.uid})
+      this.beLiked = true
+    },
+    async unlike () {
+      await this.likeRef.doc(this.currentUser.uid).delete()
+      this.beLiked = false
+    },
+    async checkLikeStatus () {
+      const doc = await this.likeRef.doc(this.currentUser.uid).get()
+      this.beLiked = doc.exists
+    },
+  },
   computed: {
     currentUser () {
       return this.$store.state.user
