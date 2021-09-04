@@ -8,7 +8,7 @@
         <!-- <a><img src="/images/img1.jpg"></a> -->
       </v-col>
       <v-col class="displayName">
-        <p>kaiwajun</p>
+        <p>user name</p>
       </v-col>
     </v-row>
     <div class="follow-btn">

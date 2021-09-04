@@ -68,11 +68,14 @@ import { auth } from "~/plugins/firebase"
 export default {
   methods: {
     loginGoogle() {
-      this.$store.dispatch('loginGoogle')
-      this.$router.push('/')
-      .catch(() => {
-        this.$parent.socialLoginErrorMsg =
-        '現在Googleでのログインは使用できません。後ほどお試しください。'
+      this.$store
+        .dispatch('loginGoogle')
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch(() => {
+          this.$parent.socialLoginErrorMsg =
+            '現在Googleでのログインは使用できません。後ほどお試しください。'
       })
     }
   }

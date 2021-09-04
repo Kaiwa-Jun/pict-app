@@ -2,8 +2,8 @@
   <div>
     <div class="posts">
       <post v-for="(post, index) in posts" :post="post" :key=index />
-    </div>
-    <!-- <div class="modal">
+    <!-- </div>
+    <div class="modal">
       <div class="actions">
         <div class="back-btn">
           <img src="/images/back.svg">
@@ -19,8 +19,8 @@
           >
           <el-button size="small" type="primary">click to upload</el-button>
         </el-upload>
-      </div>
-    </div> -->
+      </div> -->
+    </div>
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
      }
   },
   mounted (){
-    db.collection('posts').onSnapshot((snapshot) => {
+    db.collection('posts').orderBy('createdAt').onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
         const doc = change.doc
         if (change.type === 'added') {

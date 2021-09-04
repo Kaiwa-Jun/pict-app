@@ -82,6 +82,7 @@
                >
                 {{ socialLoginErrorMsg }} 
                </v-alert>
+               <SocialLogin />
            </v-col>
          </v-row>
        </v-col>
@@ -97,7 +98,12 @@
 </template>
 
 <script>
+import SocialLogin from '~/components/SocialLogin.vue'
+
 export default {
+  components: {
+    SocialLogin
+  },
   computed: {
    user () {
      return this.$store.getters['user']

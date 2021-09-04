@@ -101,13 +101,16 @@ export default {
     },
   },
   methods: {
-   ...mapActions(['signOut']),
+   ...mapActions(['signOut','checkLogin']),
    toCreate () {
      this.$router.push('/pictures/create')
    },
   },
   components: {
     AppFooter
+  },
+  mounted (){
+     this.$store.dispatch('checkLogin')
   },
   data () {
     return {

@@ -20,7 +20,7 @@
           :show-file-list="false"
           :http-request="uploadFile"
           >
-          <el-button size="small" type="primary">click to upload</el-button>
+          <el-button size="small" type="primary">画像を選択(アイコンにしたい)</el-button>
         </el-upload>
         <el-input
           type="textarea"
