@@ -30,29 +30,29 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
+      <!-- <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
       >
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
+      </v-btn> -->
+      <!-- <v-btn
         icon
         @click.stop="clipped = !clipped"
       >
         <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
+      </v-btn> -->
+      <!-- <v-btn
         icon
         @click.stop="fixed = !fixed"
       >
         <v-icon>mdi-minus</v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-toolbar-title v-text="title" /> <!--Vuetifyの文字部分-->
       <v-spacer />
-       <p v-if="user.login" class="text" >
+       <!-- <p v-if="user.login" class="text" >
          <v-btn text @click="signOut">ログアウト</v-btn>
-       </p>
+       </p> -->
       
       <v-btn @click="toCreate">
         <v-icon>mdi-image-plus</v-icon>
@@ -152,7 +152,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'アプリ名入れる'
     }
   }
 }

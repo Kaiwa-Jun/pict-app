@@ -1,4 +1,5 @@
 import firebase from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 
 export const state = () => ({
   user: {
@@ -45,6 +46,11 @@ export const actions = {
       if (user) {
         commit('getData', { uid: user.uid, email: user.email, name: user.displayName })
         commit('switchLogin')
+        db.collection('users').doc(user.uid).set({
+          uid: user.uid,
+          displayName: user.displayName,
+          photoURL: user.photoURL
+        })
       }
     })
   },
@@ -65,7 +71,7 @@ export const actions = {
        .auth()
        .signOut()
        .then(() => {
-         console.log('ログアウトしました');
+         window.alert('ログアウトしました');
          location.reload();
        })
        .catch((error) => {

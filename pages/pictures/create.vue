@@ -16,7 +16,7 @@
         </div>
         <el-upload
           v-if="!imageUrl"
-          actions=""
+          action=""
           :show-file-list="false"
           :http-request="uploadFile"
           >
@@ -25,7 +25,7 @@
         <el-input
           type="textarea"
           :rows="8"
-          aria-placeholder="設定値の入力"
+          placeholder="設定値の入力"
           class="mt-8"
           v-model="text"
         >
@@ -96,12 +96,18 @@ export default {
       modalVisible: true,
     }
   },
+  computed: {
+    currentUser () {
+      return this.$store.state.user
+    }
+  },
   methods: {
     async post() {
       await db.collection('posts').add({
         text: this.text,
         image: this.imageUrl,
-        createdAt: new Date().getTime()
+        createdAt: new Date().getTime(),
+        userId: this.currentUser.uid
       })
       this.modalVisible = false
       this.text = null
@@ -114,7 +120,7 @@ export default {
       const time = new Date().getTime()
       const ref = storageRef.child(`posts/${time}_${data.file.name}`)
       const snapshot = await ref.put(data.file)
-      const url = await snapshot.ref.getDownloadURL()
+      const url = await snapshot.ref.getDownloadURL() //画像のURLの取得
       this.imageUrl = url
     }
   }

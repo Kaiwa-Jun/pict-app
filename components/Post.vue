@@ -2,10 +2,13 @@
   <div>
    <div class="posts">
      <div class="post">
-       <div class="user" align-content="center">
+       <div class="user" align-content="center" v-if="!isProfileMode">
          <div class="avatar">
            <v-avatar color="primary" size="35">
-             <span class="white--text">i</span>
+             <nuxt-link :to="`/users/${user.id}`">
+              <img :src="user.photoURL" alt="">
+             </nuxt-link>
+             <!-- <span class="white--text">i</span> -->
            </v-avatar>
            <!-- <a><img src="/images/post1.jpg" class="w-8 h-8 rounded-full" alt=""></a> -->
          </div>
@@ -17,14 +20,15 @@
        <div class="post-image">
          <img :src="post.image" alt="">
        </div>
-         <v-toolbar v-if="post" prominent width="70%">
-           <div class="actions my-2 ml-4 flex">
+         <v-toolbar v-if="post" prominent width="70%" ><!-- flat入れる -->
+           <div class="actions">
               <img v-if="beLiked" @click="unlike" src='/images/heart_active.svg' class="w-6 mr-3 ">
               <img v-else @click="like" src='/images/heart.svg' class="w-6 mr-3 ">
               <p>{{ likeCount }}</p>
            </div>
            <div class="message"> 
               <p class="mt-10">{{ post.text }}</p>
+              <!-- 設定値をSlidersで -->
               <p class="mt-10">{{ createdAt | datetime }}</p>
            </div>
          </v-toolbar>
@@ -37,26 +41,35 @@
 import { db } from '~/plugins/firebase'
 
 export default {
-  props: ['post'],
+  props: ['post', 'mode'],
   data() {
     return {
       createdAt: new Date(),
       user: {
-        displayName: 'kaiwa7124'
+        id: '',
+        displayName: '',
+        photoURL: ''
       },
       likeCount: 0,
       beLiked: false
     }
   },
-  mounted() {
+  async mounted() {
     this.likeRef = db.collection('posts').doc(this.post.id).collection('likes')
     this.checkLikeStatus()
+
+    this.fetchUser()
 
     this.likeRef.onSnapshot((snap) => {
       this.likeCount = snap.size
     })
   },
   methods: {
+    async fetchUser () {
+      const userId = this.post.userId
+      const doc = await db.collection('users').doc(userId).get()
+      this.user = { ...doc.data(), id: userId }
+    },
     async like () {
       await this.likeRef.doc(this.currentUser.uid).set({ uid: this.currentUser.uid})
       this.beLiked = true
@@ -73,7 +86,10 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.user
-    }
+    },
+    isProfileMode () {
+      return this.mode === 'profile'
+    },
   },
   filters: {
     datetime(date) {

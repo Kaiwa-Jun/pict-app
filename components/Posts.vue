@@ -2,24 +2,6 @@
   <div>
     <div class="posts">
       <post v-for="(post, index) in posts" :post="post" :key=index />
-    <!-- </div>
-    <div class="modal">
-      <div class="actions">
-        <div class="back-btn">
-          <img src="/images/back.svg">
-        </div>
-        <div class="post-btn">
-        </div>
-      </div>
-      <div class="moda_content">
-        <el-upload
-          actions=""
-          :show-file-list="false"
-          :http-request="uploadFile"
-          >
-          <el-button size="small" type="primary">click to upload</el-button>
-        </el-upload>
-      </div> -->
     </div>
   </div>
 </template>
