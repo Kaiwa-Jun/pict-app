@@ -4,9 +4,9 @@
      <div class="post">
        <div class="user" align-content="center" v-if="!isProfileMode">
          <div class="avatar">
-           <v-avatar color="primary" size="35">
+           <v-avatar color="primary" size="35" >
              <nuxt-link :to="`/users/${user.id}`">
-              <img :src="user.photoURL" alt="">
+              <img :src="user.photoURL" alt=""><!--アイコンor文字の表示-->
              </nuxt-link>
              <!-- <span class="white--text">i</span> -->
            </v-avatar>
@@ -20,18 +20,33 @@
        <div class="post-image">
          <img :src="post.image" alt="">
        </div>
-         <v-toolbar v-if="post" prominent width="70%" ><!-- flat入れる -->
-           <div class="actions">
-              <img v-if="beLiked" @click="unlike" src='/images/heart_active.svg' class="w-6 mr-3 ">
-              <img v-else @click="like" src='/images/heart.svg' class="w-6 mr-3 ">
-              <p>{{ likeCount }}</p>
-           </div>
-           <div class="message"> 
-              <p class="mt-10">{{ post.text }}</p>
-              <!-- 設定値をSlidersで -->
-              <p class="mt-10">{{ createdAt | datetime }}</p>
-           </div>
-         </v-toolbar>
+
+        <v-card v-if="post" class="pa-5"><!-- flat入れる -->
+          <v-img 
+            v-if="beLiked" 
+            @click="unlike" 
+            src='/images/heart_active.svg'
+            max-width="30"
+            
+          ></v-img>
+          <v-img 
+            v-else 
+            @click="like" 
+            src='/images/heart.svg' 
+            max-width="30"
+            
+          ></v-img>
+          <p>{{ likeCount }}</p>
+          <v-card-text><!-- 設定値をSlidersで -->
+            {{ post.text }}
+          </v-card-text>
+          <v-card-text>
+            {{ createdAt | datetime }}
+          </v-card-text>
+        </v-card>
+
+     
+
      </div>
    </div>
  </div>
