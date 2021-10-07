@@ -49,27 +49,35 @@ export const actions = {
         db.collection('users').doc(user.uid).set({
           uid: user.uid,
           displayName: user.displayName,
-          photoURL: user.photoURL
+          photoURL: user.photoURL,
         })
       }
     })
   },
-  update ({ context }, name) {
-   firebase.auth().currentUser.updateProfile({
-     displayName: name
-   })
-     .then(()=> {
-       console.log('Update successful')
-     })
-     .catch((error)=> {
-       console.log(error)
-     })
-  },
+  // update ({ commit }, name) {
+  //  firebase.auth().currentUser.updateProfile({
+  //    displayName: name,
+  //  })
+  //    .then(()=> {
+  //      console.log('Update successful')
+  //    })
+  //    .catch((error)=> {
+  //      console.log(error)
+  //    })
+  // },
+  // update () {
+  //   const user = firebase.auth().currentUser;
+  //   user.updateProfile({
+  //     displayName: this.displayName,
+  //   }).then((user) => {
+  //     console.log('update success!')
+  //   }).catch((error) => {
+  //     console.log('update not success')
+  //   })
+  // },
   signOut() {
    firebase.auth().onAuthStateChanged(user => {
-     firebase
-       .auth()
-       .signOut()
+     firebase.auth().signOut()
        .then(() => {
          window.alert('ログアウトしました');
          location.reload();

@@ -1,22 +1,35 @@
 <template>
   <div>
-    <v-row class="user-info">
-      <v-col class="avatar">
-        <v-avatar color="primary" size="40">
-          <!-- <span class="white--text">i</span> -->
-          <nuxt-link :to="`/users/${user.uid}`">
-            <img :src="user.photoURL">
-          </nuxt-link>
-        </v-avatar>
-      </v-col>
-      <v-col class="displayName">
-        <p>{{ user.displayName }}</p>
-      </v-col>
-    </v-row>
-    <div class="follow-btn" v-if="!isCurrentUser">
-      <v-btn v-if="!followed" @click="follow" style="text-transform: none">Follow</v-btn>
-      <v-btn v-else @click="unfollow" style="text-transform: none">Unfollow</v-btn>
-    </div>
+    <v-card>
+      <v-container>
+
+      <v-row class="user-info" >
+
+        <v-col class="mt-2" cols="3">
+          <v-avatar color="primary" size="40">
+            <!-- <span class="white--text">i</span> -->
+            <nuxt-link :to="`/users/${user.uid}`">
+              <img :src="user.photoURL">
+            </nuxt-link>
+          </v-avatar>
+        </v-col>
+
+        <v-col class="" cols="3">
+          <v-card-text>
+
+          {{ user.displayName }}
+          </v-card-text>
+        </v-col>
+
+        <v-col class="mt-2" cols="6">
+          <div class="follow-btn" v-if="!isCurrentUser">
+            <v-btn v-if="!followed" @click="follow" style="text-transform: none">フォローする</v-btn>
+            <v-btn v-else @click="unfollow" style="text-transform: none">フォロー中</v-btn>
+          </div>
+        </v-col>    
+      </v-row>
+      </v-container>
+    </v-card>
   </div>
 </template>
 
@@ -61,5 +74,9 @@ export default {
 </script>
 
 <style scoped>
+.user-info {
+  text-align: center;
+}
+
 
 </style>

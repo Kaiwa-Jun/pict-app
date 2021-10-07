@@ -50,11 +50,18 @@
       </v-btn> -->
       <v-toolbar-title v-text="title" /> <!--Vuetifyの文字部分-->
       <v-spacer />
-       <!-- <p v-if="user.login" class="text" >
-         <v-btn text @click="signOut">ログアウト</v-btn>
-       </p> -->
+       <p v-if="user.login" class="text" >
+         <v-btn 
+          outlined
+          text 
+          @click="signOut"
+          class="mt-4"
+         >
+          ログアウト
+         </v-btn>
+       </p>
       
-      <v-btn @click="toCreate">
+      <v-btn @click="toCreate" v-if="user.login">
         <v-icon>mdi-image-plus</v-icon>
       </v-btn>
     </v-app-bar>

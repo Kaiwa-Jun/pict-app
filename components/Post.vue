@@ -4,13 +4,17 @@
      <div class="post">
        <div class="user" align-content="center" v-if="!isProfileMode">
          <div class="avatar">
-           <v-avatar color="primary" size="35" >
+           <v-avatar color="primary" size="35">
              <nuxt-link :to="`/users/${user.id}`">
-              <img :src="user.photoURL" alt=""><!--アイコンor文字の表示-->
-             </nuxt-link>
-             <!-- <span class="white--text">i</span> -->
+              <img :src="user.photoURL" alt="">
+             </nuxt-link>  
            </v-avatar>
-           <!-- <a><img src="/images/post1.jpg" class="w-8 h-8 rounded-full" alt=""></a> -->
+           <!-- <v-avatar  size="35" v-else>
+             <nuxt-link :to="`/users/${user.id}`">
+              <v-icon>mdi-account-circle</v-icon>
+             </nuxt-link>  
+           </v-avatar> -->
+           
          </div>
          <div class="user-name">
            <p v-if="user">{{ user.displayName }}</p>
@@ -21,29 +25,91 @@
          <img :src="post.image" alt="">
        </div>
 
-        <v-card v-if="post" class="pa-5"><!-- flat入れる -->
-          <v-img 
-            v-if="beLiked" 
-            @click="unlike" 
-            src='/images/heart_active.svg'
-            max-width="30"
-            
-          ></v-img>
-          <v-img 
-            v-else 
-            @click="like" 
-            src='/images/heart.svg' 
-            max-width="30"
-            
-          ></v-img>
-          <p>{{ likeCount }}</p>
-          <v-card-text><!-- 設定値をSlidersで -->
-            {{ post.text }}
-          </v-card-text>
-          <v-card-text>
-            {{ createdAt | datetime }}
-          </v-card-text>
-        </v-card>
+        <div class="input-context">
+          <v-card v-if="post" class="pa-5" flat>
+          <v-row>
+            <v-col cols="1" class="pr-0">
+              <v-img 
+                v-if="beLiked" 
+                @click="unlike" 
+                src='/images/heart_active.svg'
+                max-width="30"
+
+              ></v-img>
+              <v-img 
+                v-else 
+                @click="like" 
+                src='/images/heart.svg' 
+                max-width="30"
+              ></v-img>
+            </v-col>
+
+            <v-col cols="1" class="pa-0">
+              <v-card-text class="pl-0">
+                {{ likeCount }}
+              </v-card-text>
+            </v-col>
+
+            <v-col cols="1" class="pl-0">
+              <v-menu
+                v-if="currentUser && currentUser.uid == user.id"
+                bottom
+                offset-y
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    
+                    fab
+                    x-small
+                    outlined
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                  <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-list>
+                  <v-list-item
+                    @click="toEdit"
+                  >
+                    <v-list-item-title>編集</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+
+                <v-list>
+                  <v-list-item
+                    @click="deletePost"
+                  >
+                    <v-list-item-title>削除</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+
+              </v-menu>
+            </v-col>
+
+          </v-row>
+          <v-card-title align="left" class="pl-0">
+            <v-card-text class="pl-0 py-0">
+              {{ post.text }}
+            </v-card-text>
+
+            <v-card-text class="pb-0 pl-0">
+              F値 : {{ post.fnumber }}
+            </v-card-text>
+            <v-card-text class="py-0 pl-0">
+              シャッタースピード : {{ post.shutterSpeed }}
+            </v-card-text>
+            <v-card-text class="py-0 pl-0">
+              ISO : {{ post.iso }}
+            </v-card-text>
+
+            <v-card-text class="pl-0 grey--text">
+              {{ createdAt | datetime }}
+            </v-card-text>
+          </v-card-title>
+          </v-card>
+        </div>
 
      
 
@@ -59,6 +125,16 @@ export default {
   props: ['post', 'mode'],
   data() {
     return {
+      items: [
+         {
+           title: '編集',
+           to: "/pictures/${this.$route.params.post.id}/edit",
+         },
+         {
+           title: '削除',
+           to: '/',
+         },
+       ],
       createdAt: new Date(),
       user: {
         id: '',
@@ -66,7 +142,8 @@ export default {
         photoURL: ''
       },
       likeCount: 0,
-      beLiked: false
+      beLiked: false,
+      
     }
   },
   async mounted() {
@@ -80,6 +157,13 @@ export default {
     })
   },
   methods: {
+    toEdit () {
+      this.$router.push(`/pictures/${this.post.id}/edit`)
+    },
+    async deletePost () {
+        await db.collection('posts').doc(this.post.id).delete()
+        this.$router.push('/pictures')
+    },
     async fetchUser () {
       const userId = this.post.userId
       const doc = await db.collection('users').doc(userId).get()
@@ -143,6 +227,16 @@ export default {
   width: 70%;
   height: auto;
 }
+
+
+
+.input-context {
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 10px;
+}
+
 .message {
   width: 70%;
   margin-left: auto;
