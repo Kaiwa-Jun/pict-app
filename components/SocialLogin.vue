@@ -71,13 +71,23 @@ export default {
       this.$store
         .dispatch('loginGoogle')
         .then(() => {
-          this.$router.push('/')
+          this.$router.push('/pictures')
         })
         .catch(() => {
           this.$parent.socialLoginErrorMsg =
             '現在Googleでのログインは使用できません。後ほどお試しください。'
       })
-    }
+    },
+    setPersistence() {
+      return new Promise((resolve, reject) => {
+        firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(result => {
+            resolve();
+          });
+      });
+    },
   }
 }
 </script>

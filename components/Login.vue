@@ -91,6 +91,7 @@
   <p>email: {{ user.email }}</p>
   <p>login: {{ user.login }}</p>  
   <p>user.name: {{ user.name }}</p>  
+  <p>ユーザーネーム: {{ user.displayName }}</p>  
    </v-container>
 
 
@@ -124,14 +125,24 @@ export default {
  methods : {
    login (email, password) {
      this.$store.dispatch('login', {email: this.email, password: this.password})
-     this.$router.push('/') //ログイン後は/picturesに飛ばす？
+     this.$router.push('/pictures') 
    },
    loginGoogle () {
      this.$store.dispatch('loginGoogle')
-     this.$router.push('/') //ログイン後は/picturesに飛ばす？
+     this.$router.push('/pictures') 
    },
    update (){
      this.$store.dispatch('update', this.updateName)
+   },
+   setPersistence() {
+     return new Promise((resolve, reject) => {
+       firebase
+         .auth()
+         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+         .then(result => {
+           resolve();
+         });
+     });
    },
  }
 }

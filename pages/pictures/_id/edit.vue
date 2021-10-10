@@ -25,7 +25,7 @@
         <v-card-text>
           <v-container fluid class="setting">
             <v-textarea
-              v-model="this.post.text"
+              v-model="post.text"
               type="textarea"
               placeholder="キャプションを書く"
               clearable
@@ -99,7 +99,7 @@ export default {
   data () {
     return {
       post: {
-        text: 'aaaa',
+        text: '',
       },
       e1: '8.0',
       e2: '/3',
@@ -139,14 +139,15 @@ export default {
     }
   },
   methods: {
-    // async updatePost() {
-    //   await db.collection('posts').doc(this.post.id).set({
-    //     text: this.text,
-    //   },{merge: true})
-    //   this.text = null
-    //   window.alert('保存されました')
-    //   this.$router.push(`/pictures/${this.post.id}`)
-    // },
+    async updatePost() {
+      await db.collection('posts').doc(this.post.id).set({
+        "text": this.post.text,
+      },{merge: true})
+      window.alert('保存されました')
+      this.$router.push(`/pictures/${this.post.id}`)
+    },
+    
+
     async uploadFile(data){
       const storageRef = firebase.storage().ref()
       const time = new Date().getTime()

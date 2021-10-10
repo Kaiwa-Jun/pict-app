@@ -3,21 +3,26 @@
    <div class="posts">
      <div class="post">
        <div class="user" align-content="center" v-if="!isProfileMode">
-         <div class="avatar">
-           <v-avatar color="primary" size="35">
+         <div v-if="!user.photoURL" class="avatar-sample">
+           <v-avatar color="light-blue accent-3" size="40">
+             <nuxt-link :to="`/users/${user.id}`">
+              <img src="/images/profile.svg">
+             </nuxt-link>  
+           </v-avatar>
+         </div>
+         <div v-else class="avatar">
+           <v-avatar color="primary" size="40">
              <nuxt-link :to="`/users/${user.id}`">
               <img :src="user.photoURL" alt="">
              </nuxt-link>  
            </v-avatar>
-           <!-- <v-avatar  size="35" v-else>
-             <nuxt-link :to="`/users/${user.id}`">
-              <v-icon>mdi-account-circle</v-icon>
-             </nuxt-link>  
-           </v-avatar> -->
-           
          </div>
-         <div class="user-name">
-           <p v-if="user">{{ user.displayName }}</p>
+           
+         <div v-if="!user.displayName" class="user-name">
+           <p>sample-userName</p>
+         </div>
+         <div v-else class="user-name">
+           <p>{{ user.displayName }}</p>
          </div>
        </div>
 
@@ -213,6 +218,20 @@ export default {
   margin-left: 130px;
   margin-top: 10px;
 }
+.avatar-sample {
+  float: left;
+  width: 5%;
+  margin-left: 130px;
+  margin-top: 10px;
+}
+
+.avatar-sample img{
+  width: 20px;
+}
+.avatar img{
+  width: 40px;
+}
+
 .user-name {
   width: 15%;
   padding-top: 17px;

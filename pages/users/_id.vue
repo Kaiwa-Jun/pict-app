@@ -1,17 +1,28 @@
 <template>
   <div>
-            <v-btn v-if="isCurrentUser" text @click="signOut" class="text-sm">ログアウト</v-btn>
+    <v-btn v-if="isCurrentUser" text @click="signOut" class="text-sm">ログアウト</v-btn>
     <v-card>
       <v-container>
         <v-row class="px-15 pt-5 pb-0">
           <v-col cols="3" class="text-center">
             <div class="flex">
-              <div class="user-avatar">
-                <v-avatar color="primary" size="40" class="user-avatar">
+              <!-- アイコン -->
+              <div v-if="!user.photoURL" class="user-avatar-sample">
+                <v-avatar color="light-blue accent-3" size="40" class="">
+                  <img src="/images/profile.svg">
+                </v-avatar>
+              </div>
+              <div v-else class="user-avatar">
+                <v-avatar color="primary" size="40" class="">
                   <img :src="user.photoURL">
                 </v-avatar>
               </div>
-              <v-card-text class="pt-3 pb-0">
+
+              <!-- ユーザネーム -->
+              <v-card-text v-if="!user.photoURL" class="pt-3 pb-0">
+                sample-userName
+              </v-card-text>
+              <v-card-text v-else class="pt-3 pb-0">
                 {{ user.displayName }}
               </v-card-text>
             </div>
@@ -46,6 +57,7 @@
           <br>
         <div class="text-center">
           <v-dialog
+            v-if="isCurrentUser"
             v-model="dialog"
             max-width="600px"
           >
@@ -65,8 +77,13 @@
                 <span class="text-h7">プロフィールを編集</span>
               </v-card-title>
                 <div class="flex text-center my-2">
-                  <div class="user-avatar">
-                    <v-avatar color="primary" size="70" class="user-avatar">
+                  <div v-if="!user.photoURL" class="modal-avatar-sample">
+                    <v-avatar color="light-blue accent-3" size="70" class="">
+                      <img src="/images/profile.svg">
+                    </v-avatar>
+                  </div>
+                  <div v-else class="user-avatar">
+                    <v-avatar color="primary" size="70" class="">
                       <img :src="user.photoURL">
                     </v-avatar>
                   </div>
@@ -122,13 +139,6 @@
             </v-card>
 
           </v-dialog>
-          <!-- <v-btn 
-            class="mb-10"
-            outlined
-            width="370"
-          >
-          プロフィールを編集
-          </v-btn> -->
         </div>
         <post v-for="post in posts" :key="post.id" :post="post" :mode="'profile'" />
       </v-container>
@@ -164,7 +174,6 @@ export default {
       user: {
         displayName: '',
         photoURL: '',
-        selfIntro: null,
       },
       posts: [],
     }
@@ -199,6 +208,7 @@ export default {
      const doc = await db.collection('users').doc(userId).add({
         selfIntro: this.user.selfIntro
       })
+      this.user = doc.data()
       dialog = false
       window.alert('保存されました')
     },
@@ -221,6 +231,16 @@ export default {
 <style scoped>
 .user-name {
   margin-top: 2px;
+}
+
+.user-avatar img{
+  width: 40px;
+}
+.user-avatar-sample img{
+  width: 20px;
+}
+.modal-avatar-sample img{
+  width: 25px;
 }
 
 

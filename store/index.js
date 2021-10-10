@@ -80,7 +80,8 @@ export const actions = {
      firebase.auth().signOut()
        .then(() => {
          window.alert('ログアウトしました');
-         location.reload();
+         this.$router.push('/')
+        //  location.reload();
        })
        .catch((error) => {
          console.log(`ログアウト時にエラーが発生しました (${error})`);
