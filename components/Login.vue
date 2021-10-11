@@ -125,11 +125,11 @@ export default {
  methods : {
    login (email, password) {
      this.$store.dispatch('login', {email: this.email, password: this.password})
-     this.$router.push('/pictures') 
+    //  this.$router.push('/pictures') 
    },
    loginGoogle () {
      this.$store.dispatch('loginGoogle')
-     this.$router.push('/pictures') 
+    //  this.$router.push('/pictures') 
    },
    update (){
      this.$store.dispatch('update', this.updateName)

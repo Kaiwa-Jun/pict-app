@@ -6,19 +6,37 @@
       <v-row class="user-info" >
 
         <v-col class="mt-2" cols="3">
-          <v-avatar color="primary" size="40">
-            <!-- <span class="white--text">i</span> -->
+          <!-- <v-avatar color="primary" size="40">
             <nuxt-link :to="`/users/${user.uid}`">
               <img :src="user.photoURL">
             </nuxt-link>
-          </v-avatar>
+          </v-avatar> -->
+          <div v-if="!user.photoURL" class="avatar-sample">
+           <v-avatar color="light-blue accent-3" size="40">
+             <nuxt-link :to="`/users/${user.id}`">
+              <img src="/images/profile.svg">
+             </nuxt-link>  
+           </v-avatar>
+         </div>
+         <div v-else class="avatar">
+           <v-avatar color="primary" size="40">
+             <nuxt-link :to="`/users/${user.id}`">
+              <img :src="user.photoURL" alt="">
+             </nuxt-link>  
+           </v-avatar>
+         </div>
         </v-col>
 
         <v-col class="" cols="3">
-          <v-card-text>
-
+          <div v-if="!user.displayName" class="user-name">
+           <p>sample-userName</p>
+         </div>
+         <div v-else class="user-name">
+           <p>{{ user.displayName }}</p>
+         </div>
+          <!-- <v-card-text>
           {{ user.displayName }}
-          </v-card-text>
+          </v-card-text> -->
         </v-col>
 
         <v-col class="mt-2" cols="6">
@@ -77,6 +95,11 @@ export default {
 .user-info {
   text-align: center;
 }
-
+.avatar-sample img{
+  width: 20px;
+}
+.avatar img{
+  width: 40px;
+}
 
 </style>

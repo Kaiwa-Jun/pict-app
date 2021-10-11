@@ -71,7 +71,7 @@ export default {
       this.$store
         .dispatch('loginGoogle')
         .then(() => {
-          this.$router.push('/pictures')
+          // this.$router.push('/pictures')
         })
         .catch(() => {
           this.$parent.socialLoginErrorMsg =

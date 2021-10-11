@@ -26,6 +26,7 @@ export const actions = {
   login({ dispatch }, payload) {
     firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(user => {
+        this.$router.push('/pictures')
           console.log('成功！')
           dispatch('checkLogin')
         }).catch((error) => {
@@ -36,6 +37,7 @@ export const actions = {
    const provider = new firebase.auth.GoogleAuthProvider()
    firebase.auth().signInWithPopup(provider)
    .then((result) => {
+    this.$router.push('/pictures')
      dispatch('checkLogin')
    }).catch((error) => {
      window.alert(error)
@@ -79,9 +81,8 @@ export const actions = {
    firebase.auth().onAuthStateChanged(user => {
      firebase.auth().signOut()
        .then(() => {
+         location.replace('/');
          window.alert('ログアウトしました');
-         this.$router.push('/')
-        //  location.reload();
        })
        .catch((error) => {
          console.log(`ログアウト時にエラーが発生しました (${error})`);

@@ -234,10 +234,10 @@ export default {
 }
 
 .user-avatar img{
-  width: 40px;
+  width: 70px;
 }
 .user-avatar-sample img{
-  width: 20px;
+  width: 18px;
 }
 .modal-avatar-sample img{
   width: 25px;

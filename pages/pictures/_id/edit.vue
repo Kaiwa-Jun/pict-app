@@ -24,6 +24,7 @@
 
         <v-card-text>
           <v-container fluid class="setting">
+          <!-- テキスト入力 -->
             <v-textarea
               v-model="post.text"
               type="textarea"
@@ -33,6 +34,7 @@
             >
             </v-textarea>
 
+          <!-- 設定値入力 -->
             <v-row>
               <v-col cols="6">
                 <v-subheader>
@@ -41,7 +43,7 @@
               </v-col>
               <v-col cols="6">
                 <v-select
-                  v-model="e1"
+                  v-model="post.fnumber"
                   :items="fnumber"
                   menu-props="auto"
                   label="F値"
@@ -57,7 +59,7 @@
               </v-col>
               <v-col cols="6">
                 <v-select
-                  v-model="e2"
+                  v-model="post.shutterSpeed"
                   :items="shutterSpeed"
                   menu-props="auto"
                   label="シャッタースピード"
@@ -73,7 +75,7 @@
               </v-col>
               <v-col cols="6">
                 <v-select
-                  v-model="e3"
+                  v-model="post.iso"
                   :items="iso"
                   menu-props="auto"
                   label="ISO"
@@ -84,7 +86,7 @@
 
             </v-row>
             <v-btn @click="updatePost" class="mt-15">
-              POST
+              update
             </v-btn>
           </v-container>
         </v-card-text>
@@ -98,12 +100,14 @@ import { db, firebase } from '~/plugins/firebase'
 export default {
   data () {
     return {
+      imageUrl: null,
+      text: null,
       post: {
         text: '',
       },
-      e1: '8.0',
-      e2: '/3',
-      e3: '500',
+      e1: '',
+      e2: '',
+      e3: '',
       items: [
         { text: 'State 1'},
         { text: 'State 2'},
@@ -138,15 +142,27 @@ export default {
       return this.$store.state.user
     }
   },
+    async mounted() {
+      const postId = this.$route.params.id
+       console.log(postId)
+     const doc = await db.collection('posts').doc(postId).get()
+     this.post = doc.data()
+    //  snapshot.forEach((doc) => {
+    //    this.posts.push({ id: doc.id, ...doc.data() })
+    //  })
+   },
   methods: {
     async updatePost() {
-      await db.collection('posts').doc(this.post.id).set({
+      const postId = this.$route.params.id
+      await db.collection('posts').doc(postId).set({
         "text": this.post.text,
+        "fnumber":this.post.fnumber,
+        "shutterSpeed":this.post.shutterSpeed,
+        "iso":this.post.iso
       },{merge: true})
       window.alert('保存されました')
-      this.$router.push(`/pictures/${this.post.id}`)
+      this.$router.push(`/pictures`)
     },
-    
 
     async uploadFile(data){
       const storageRef = firebase.storage().ref()
@@ -196,5 +212,8 @@ export default {
 .post-image img {
   width: 70%;
   height: auto;
+}
+.post-image  {
+  border-bottom: 1px solid;
 }
 </style>

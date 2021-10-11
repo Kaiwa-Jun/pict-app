@@ -49,6 +49,9 @@
                                 ? 'text'
                                 : 'password'
                         "
+                        validate-on-blur
+                        :rules="register_passwordAgainRules"
+                        @click:append="show_registerPassword = !show_registerPassword"
                         >
                         <!-- <template v-slot:progress>
                           <v-progress-linear
