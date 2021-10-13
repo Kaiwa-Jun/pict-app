@@ -8,19 +8,7 @@
        <div class="post-image">
          <img :src="post.image" alt="">
        </div>
-        <!-- <v-container class="imageUpload">
-          <div v-if="imageUrl">
-            <img :src="imageUrl">
-          </div>
-          <el-upload
-            v-if="!imageUrl"
-            action=""
-            :show-file-list="false"
-            :http-request="uploadFile"
-          >
-            <el-button class="custom-icon" type="primary" icon="el-icon-picture"></el-button>
-          </el-upload>
-        </v-container> -->
+
 
         <v-card-text>
           <v-container fluid class="setting">

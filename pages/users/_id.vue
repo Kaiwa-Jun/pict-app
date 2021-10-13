@@ -55,7 +55,8 @@
           </v-col>
         </v-row>
           <br>
-        <div class="text-center">
+
+        <!-- <div class="text-center">
           <v-dialog
             v-if="isCurrentUser"
             v-model="dialog"
@@ -113,7 +114,7 @@
                   <v-col cols="7">
                     <v-textarea
                       rows="2"
-                      v-model="user.selfIntro"
+
                     ></v-textarea>
                   </v-col>
                 </v-row>
@@ -139,7 +140,7 @@
             </v-card>
 
           </v-dialog>
-        </div>
+        </div> -->
         <post v-for="post in posts" :key="post.id" :post="post" :mode="'profile'" />
       </v-container>
     </v-card> 
@@ -178,6 +179,12 @@ export default {
       posts: [],
     }
   },
+  // async mounted() {
+  //    const userId = this.$route.params.id
+  //      console.log(userId)
+  //    const doc = await db.collection('users').doc(userId).get()
+  //    this.user = doc.data()
+  //  },
   methods: {
     ...mapActions(['signOut']),
     async fetchFollowingCount () {
@@ -203,15 +210,15 @@ export default {
      this.fetchFollowingCount()
      this.fetchFollowerCount()
    },
-   async update() {
-     const userId = this.$route.params.id
-     const doc = await db.collection('users').doc(userId).add({
-        selfIntro: this.user.selfIntro
-      })
-      this.user = doc.data()
-      dialog = false
-      window.alert('保存されました')
-    },
+  //  async update() {
+  //    const userId = this.$route.params.id
+  //    await db.collection('users').doc(userId).update({
+  //       "displayName": this.user.displayName,
+  //       // "photoURL": this.user.photoURL
+  //     },{merge: true})
+  //     window.alert('保存されました')
+  //     dialog = false
+  //   },
   //  update () {
   //    this.$store.dispatch('update', {displayName: this.user.displayName} )
   //  },
