@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn v-if="isCurrentUser" text @click="signOut" class="text-sm">ログアウト</v-btn>
+    <!-- <v-btn v-if="isCurrentUser" text @click="signOut" class="text-sm">ログアウト</v-btn> -->
     <v-card>
       <v-container>
         <v-row class="px-15 pt-5 pb-0">
@@ -56,7 +56,7 @@
         </v-row>
           <br>
 
-        <!-- <div class="text-center">
+        <div class="text-center">
           <v-dialog
             v-if="isCurrentUser"
             v-model="dialog"
@@ -114,7 +114,7 @@
                   <v-col cols="7">
                     <v-textarea
                       rows="2"
-
+                    
                     ></v-textarea>
                   </v-col>
                 </v-row>
@@ -132,7 +132,7 @@
                 </v-btn>
                 <v-btn
                   color="blue darken-1"
-                  @click="update"
+                  @click="updateUser"
                 >
                   完了
                 </v-btn>
@@ -140,16 +140,37 @@
             </v-card>
 
           </v-dialog>
-        </div> -->
+        </div> 
         <post v-for="post in posts" :key="post.id" :post="post" :mode="'profile'" />
       </v-container>
     </v-card> 
+        
+    <v-footer
+      :absolute="fixed"
+      app
+    >
+      <div class="bottom-navigation">
+        <div class="nav-item">
+          <nuxt-link to="/pictures"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/pictures/create"><img src="/images/plus-square.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link :to="`/users/${currentUser.uid}`"><img src="/images/user2.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/users"><img src="/images/users.svg" class="h-6 mt-4"></nuxt-link>
+        </div>
+      </div>
+    </v-footer>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import { db } from '~/plugins/firebase'
+import firebase from '~/plugins/firebase'
 import Post from '~/components/Post.vue'
 
 export default {
@@ -164,11 +185,14 @@ export default {
       if (this.currentUser) {
         return this.currentUser.uid == this.$route.params.id
       }
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
     }
   },
   data () {
     return {
-      update: true,
+      updateUser: true,
       dialog: false,
       followingCount: '0',
       followerCount: '0',
@@ -179,12 +203,12 @@ export default {
       posts: [],
     }
   },
-  // async mounted() {
-  //    const userId = this.$route.params.id
-  //      console.log(userId)
-  //    const doc = await db.collection('users').doc(userId).get()
-  //    this.user = doc.data()
-  //  },
+  async mounted() {
+     const userId = this.$route.params.id
+       console.log(userId)
+     const doc = await db.collection('users').doc(userId).get()
+     this.user = doc.data()
+   },
   methods: {
     ...mapActions(['signOut']),
     async fetchFollowingCount () {
@@ -210,14 +234,21 @@ export default {
      this.fetchFollowingCount()
      this.fetchFollowerCount()
    },
-  //  async update() {
+  //  async updateUser() {
+  //    const db = firebase.firestore()
   //    const userId = this.$route.params.id
+  //    console.log(userId)
   //    await db.collection('users').doc(userId).update({
   //       "displayName": this.user.displayName,
   //       // "photoURL": this.user.photoURL
-  //     },{merge: true})
-  //     window.alert('保存されました')
-  //     dialog = false
+  //     })
+  //     .then(()=> {
+  //       window.alert('保存されました')
+  //       dialog = false
+  //     })
+  //     .catch((error)=> {
+  //       console.log(error)
+  //     })
   //   },
   //  update () {
   //    this.$store.dispatch('update', {displayName: this.user.displayName} )
@@ -250,5 +281,15 @@ export default {
   width: 25px;
 }
 
+.bottom-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
 
+.nav-item {
+  width: calc(100% / 4 );
+  text-align: center;
+}
 </style>

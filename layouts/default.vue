@@ -50,20 +50,39 @@
       </v-btn> -->
       <v-toolbar-title v-text="title" /> <!--Vuetifyの文字部分-->
       <v-spacer />
+
+
+      <!-- アイコン部分 -->
+      <div v-if="user.login">
+        <div v-if="!user.photoURL" class="avatar-sample">
+          <v-avatar color="light-blue accent-3" size="35">
+            <nuxt-link :to="`/users/${user.id}`">
+             <img src="/images/profile.svg">
+            </nuxt-link>  
+          </v-avatar>
+        </div>
+        <div v-else class="avatar">
+          <v-avatar color="primary" size="35">
+            <nuxt-link :to="`/users/${user.id}`">
+             <img :src="user.photoURL" alt="">
+            </nuxt-link>  
+          </v-avatar>
+        </div>
+      </div>
+
        <p v-if="user.login" class="text" >
          <v-btn 
-          outlined
           text 
           @click="signOut"
           class="mt-4"
          >
-          ログアウト
+          <img src="/images/log-out.svg" class="h-6 ">
          </v-btn>
        </p>
       
-      <v-btn @click="toCreate" v-if="user.login">
+      <!-- <v-btn @click="toCreate" v-if="user.login">
         <v-icon>mdi-image-plus</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
     <v-main>
       <v-container>
@@ -88,12 +107,22 @@
       </v-list>
     </v-navigation-drawer> -->
     <!-- <app-footer /> -->
-    <v-footer
-      :absolute="!fixed"
+    <!-- <v-footer
+      :absolute="fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+      <div class="bottom-navigation">
+        <div class="nav-item">
+          <nuxt-link to="/"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/users"><img src="/images/follow.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link :to="`/users/${currentUser.uid}`"><img src="/images/profile.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+      </div>
+    </v-footer> -->
   </v-app>
 </template>
 
@@ -106,6 +135,12 @@ export default {
     user () {
       return this.$store.getters['user']
     },
+    currentUser () {
+      return this.$store.state.user
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
+    }
   },
   methods: {
    ...mapActions(['signOut','checkLogin']),
@@ -132,8 +167,8 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          title: 'ログイン・アカウント作成',
+          to: '/login'
         },
         {
           icon: 'mdi-chart-bubble',
@@ -166,5 +201,23 @@ export default {
 </script>
 
 <style scoped>
+.avatar-sample img{
+  width: 15px;
+  padding-top: 2px;
+}
+.avatar img{
+  width: 35px;
+}
+.bottom-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.nav-item {
+  width: calc(100% / 3 );
+  text-align: center;
+}
 
 </style>

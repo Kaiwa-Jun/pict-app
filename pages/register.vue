@@ -14,7 +14,7 @@
               grow
               class="mb-3"
             >
-              <v-tab to="/">ログイン</v-tab>
+              <v-tab to="/login">ログイン</v-tab>
               <v-tab to="/register">アカウント登録</v-tab>
             </v-tabs>
 
@@ -169,7 +169,7 @@ export default {
   methods: {
     register () {
       this.$store.dispatch('register', {email: this.email, password: this.password})
-      this.$router.push('/') //ログイン後は/picturesに飛ばす？
+      // this.$router.push('/') 
     }
   },
 }

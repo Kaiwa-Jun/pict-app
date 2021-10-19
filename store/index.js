@@ -94,9 +94,23 @@ export const actions = {
    .then(user => {
      console.log(user)
      dispatch('checkLogin')
+     dispatch('sendEmail')
    }).catch(function (error) {
      console.log({'code':error.code, 'message':error.message})
    })
+  },
+  sendEmail(){
+    const actionCodeSettings = {
+      url: "http://" + location.host + "/",
+    };
+    firebase.auth().languageCode = "ja";
+    const user = firebase.auth().currentUser;
+    user
+      .sendEmailVerification(actionCodeSettings)
+      .then(() => 
+        alert("認証メールを送りました!",
+        this.$router.push('/')
+      )).catch((e) => console.log(e));
   },
 }
 

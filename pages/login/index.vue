@@ -1,6 +1,6 @@
 <template>
  <div class="page">
-   <p>top page</p>
+   <Login />
    <v-footer
       :absolute="!fixed"
       app
@@ -11,9 +11,14 @@
 </template>
 
 <script>
+import Login from '~/components/Login.vue'
 import { mapActions } from 'vuex'
 
 export default {
+  // middleware: 'authenticated',
+ components: {
+   Login: Login,
+ },
  computed: {
    user () {
      return this.$store.getters['user']

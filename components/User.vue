@@ -6,11 +6,6 @@
       <v-row class="user-info" >
 
         <v-col class="mt-2" cols="3">
-          <!-- <v-avatar color="primary" size="40">
-            <nuxt-link :to="`/users/${user.uid}`">
-              <img :src="user.photoURL">
-            </nuxt-link>
-          </v-avatar> -->
           <div v-if="!user.photoURL" class="avatar-sample">
            <v-avatar color="light-blue accent-3" size="40">
              <nuxt-link :to="`/users/${user.id}`">
@@ -48,6 +43,25 @@
       </v-row>
       </v-container>
     </v-card>
+    <v-footer
+      :absolute="fixed"
+      app
+    >
+      <div class="bottom-navigation">
+        <div class="nav-item">
+          <nuxt-link to="/pictures"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/pictures/create"><img src="/images/plus-square.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link :to="`/users/${currentUser.uid}`"><img src="/images/user.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/users"><img src="/images/users2.svg" class="h-6 mt-4"></nuxt-link>
+        </div>
+      </div>
+    </v-footer>
   </div>
 </template>
 
@@ -67,6 +81,9 @@ export default {
     },
     isCurrentUser () {
       return this.currentUser.uid === this.user.id
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
     }
   },
   async mounted () {
@@ -100,6 +117,20 @@ export default {
 }
 .avatar img{
   width: 40px;
+}
+.user-name {
+  margin-top: 15px;
+}
+.bottom-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.nav-item {
+  width: calc(100% / 4 );
+  text-align: center;
 }
 
 </style>

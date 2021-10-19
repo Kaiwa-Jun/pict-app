@@ -16,7 +16,7 @@
               grow
               class="mb-3"
               >
-               <v-tab to="/">ログイン</v-tab>
+               <v-tab to="/login">ログイン</v-tab>
                <v-tab to="/register">アカウント登録</v-tab>
              </v-tabs>
 
@@ -52,14 +52,30 @@
                         show_loginpassword = !show_loginpassword
                       "
                      />
-                     <v-btn
-                      :disabled="!login_valid"
-                      color="blue darken-3"
-                      class="my-4 white--text"
-                      @click="login"
-                     >
-                      ログイン
-                     </v-btn>
+                     <v-row>
+                       <v-col sm='4'>
+                          <v-btn
+                           :disabled="!login_valid"
+                           color="blue darken-3"
+                           class="my-4 white--text"
+                           @click="login"
+                          >
+                           ログイン
+                          </v-btn>
+                       </v-col>
+                       <v-col sm='8' class="pt-0 pr-0">
+                          <v-btn
+                           class=""
+                           text
+                           color="primary"
+                           @click="sendPasswordResetEmail"
+                          >
+                           パスワードの変更はこちら
+                          </v-btn>
+                       </v-col>
+                     </v-row>
+
+                     
                    </v-form>
                  </v-card-text>
                </v-card>
@@ -100,6 +116,7 @@
 
 <script>
 import SocialLogin from '~/components/SocialLogin.vue'
+import firebase from '~/plugins/firebase'
 
 export default {
   components: {
@@ -134,16 +151,30 @@ export default {
    update (){
      this.$store.dispatch('update', this.updateName)
    },
-   setPersistence() {
-     return new Promise((resolve, reject) => {
-       firebase
-         .auth()
-         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-         .then(result => {
-           resolve();
-         });
-     });
-   },
+   async sendPasswordResetEmail({ email }) {
+    const actionCodeSettings = {
+      url: 'http://' + window.location.host
+    }
+    firebase
+      .auth()
+      .sendPasswordResetEmail(this.user.email, actionCodeSettings)
+      .then(() => {
+        // Email sent.
+      })
+      .catch(() => {
+        // An error happened.
+      })
+  }
+  //  setPersistence() {
+  //    return new Promise((resolve, reject) => {
+  //      firebase
+  //        .auth()
+  //        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  //        .then(result => {
+  //          resolve();
+  //        });
+  //    });
+  //  },
  }
 }
 </script>
@@ -155,4 +186,5 @@ export default {
 .updateform {
   border: solid 1px black;
 }
+
 </style>

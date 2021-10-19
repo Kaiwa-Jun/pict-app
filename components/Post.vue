@@ -218,7 +218,7 @@ export default {
   margin-left: 130px;
   margin-top: 10px;
 }
-.avatar-sample {
+.avatar {
   float: left;
   width: 5%;
   margin-left: 130px;

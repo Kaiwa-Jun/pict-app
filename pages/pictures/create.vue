@@ -123,6 +123,25 @@
         </v-card-text>
       </v-card>
 
+      <v-footer
+      :absolute="fixed"
+      app
+    >
+      <div class="bottom-navigation">
+        <div class="nav-item">
+          <nuxt-link to="/pictures"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/pictures/create"><img src="/images/plus-square2.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link :to="`/users/${currentUser.uid}`"><img src="/images/user.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/users"><img src="/images/users.svg" class="h-6 mt-4"></nuxt-link>
+        </div>
+      </div>
+    </v-footer>
     </div>
   </v-app>
 </template>
@@ -131,6 +150,7 @@
 import { db, firebase } from '~/plugins/firebase'
 
 export default {
+  // middleware: 'authenticated',
   data () {
     return {
       dialog: false,
@@ -172,6 +192,9 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.user
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
     }
   },
   methods: {
@@ -241,5 +264,17 @@ export default {
 .post-image img {
   width: 70%;
   height: auto;
+}
+
+.bottom-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.nav-item {
+  width: calc(100% / 4 );
+  text-align: center;
 }
 </style>
