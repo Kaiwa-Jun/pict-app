@@ -4,7 +4,7 @@
       <v-btn
         block
         class="color-twitter text-capitalize mb-3"
-        
+        @click="loginTwitter"
       >
         <v-icon left class="color-twitter__icon" size="22">
           mdi-twitter
@@ -76,6 +76,17 @@ export default {
         .catch(() => {
           this.$parent.socialLoginErrorMsg =
             '現在Googleでのログインは使用できません。後ほどお試しください。'
+      })
+    },
+    loginTwitter() {
+      this.$store
+        .dispatch('loginTwitter')
+        .then(() => {
+          // this.$router.push('/pictures')
+        })
+        .catch(() => {
+          this.$parent.socialLoginErrorMsg =
+            '現在Twitterでのログインは使用できません。後ほどお試しください。'
       })
     },
     setPersistence() {

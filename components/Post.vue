@@ -11,7 +11,7 @@
            </v-avatar>
          </div>
          <div v-else class="avatar">
-           <v-avatar color="primary" size="40">
+           <v-avatar size="40">
              <nuxt-link :to="`/users/${user.id}`">
               <img :src="user.photoURL" alt="">
              </nuxt-link>  
@@ -230,6 +230,7 @@ export default {
 }
 .avatar img{
   width: 40px;
+  margin-top: 3px;
 }
 
 .user-name {

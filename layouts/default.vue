@@ -182,8 +182,8 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: '投稿の追加',
-          to: '/pictures/create'
+          title: 'ユーザーのフォロー',
+          to: '/users'
         },
         {
           icon: 'mdi-chart-bubble',

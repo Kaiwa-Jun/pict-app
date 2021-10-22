@@ -43,6 +43,16 @@ export const actions = {
      window.alert(error)
    })
   },
+  loginTwitter ({ dispatch }) {
+    var provider = new firebase.auth.TwitterAuthProvider()
+    firebase.auth().signInWithPopup(provider)
+    .then(function (result) {
+      this.$router.push('/pictures')
+      dispatch('checkLogin')
+    }).catch(function (error) {
+      console.log(error)
+    })
+   },
   checkLogin ({ commit }) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {

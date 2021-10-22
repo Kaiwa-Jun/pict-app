@@ -8,12 +8,12 @@
             <div class="flex">
               <!-- アイコン -->
               <div v-if="!user.photoURL" class="user-avatar-sample">
-                <v-avatar color="light-blue accent-3" size="40" class="">
+                <v-avatar color="light-blue accent-3" size="40">
                   <img src="/images/profile.svg">
                 </v-avatar>
               </div>
               <div v-else class="user-avatar">
-                <v-avatar color="primary" size="40" class="">
+                <v-avatar color="primary" size="40">
                   <img :src="user.photoURL">
                 </v-avatar>
               </div>
