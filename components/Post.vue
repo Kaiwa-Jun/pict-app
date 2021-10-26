@@ -168,6 +168,7 @@ export default {
     async deletePost () {
         await db.collection('posts').doc(this.post.id).delete()
         this.$router.push('/pictures')
+        location.reload();
     },
     async fetchUser () {
       const userId = this.post.userId
@@ -229,7 +230,7 @@ export default {
   width: 20px;
 }
 .avatar img{
-  width: 40px;
+  width: 55px;
   margin-top: 3px;
 }
 

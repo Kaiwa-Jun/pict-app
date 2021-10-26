@@ -79,10 +79,6 @@
           <img src="/images/log-out.svg" class="h-6 ">
          </v-btn>
        </p>
-      
-      <!-- <v-btn @click="toCreate" v-if="user.login">
-        <v-icon>mdi-image-plus</v-icon>
-      </v-btn> -->
     </v-app-bar>
     <v-main>
       <v-container>
@@ -166,35 +162,35 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-login-variant',
           title: 'ログイン・アカウント作成',
           to: '/login'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-timeline-outline',
           title: 'タイムライン',
           to: '/pictures'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'マイページ',
-          to: '/mypage'
+          icon: 'mdi-plus-box-outline',
+          title: '新規投稿',
+          to: '/pictures/create'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-account-multiple-outline',
           title: 'ユーザーのフォロー',
           to: '/users'
         },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'お問い合わせ',
-          to: '/inspire'
-        }
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'お問い合わせ',
+        //   to: '/inquirles'
+        // }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'アプリ名入れる'
+      title: 'PICTREAL'
     }
   }
 }

@@ -11,16 +11,18 @@
         </v-icon>
         Twitterアカウントでログイン
       </v-btn>
-      <v-btn
+
+      <!-- <v-btn
         block
         class="color-facebook text-capitalize mb-3"
-
+        @click="loginFacebook"
       >
         <v-icon left class="color-facebook__icon" size="22">
           mdi-facebook
         </v-icon>
         Facebookアカウントでログイン
-      </v-btn>
+      </v-btn> -->
+      
       <v-btn
         block
         class="color-google text-capitalize mb-3"
@@ -82,13 +84,24 @@ export default {
       this.$store
         .dispatch('loginTwitter')
         .then(() => {
-          // this.$router.push('/pictures')
+          this.$router.push('/pictures')
         })
         .catch(() => {
           this.$parent.socialLoginErrorMsg =
             '現在Twitterでのログインは使用できません。後ほどお試しください。'
       })
     },
+    // loginFacebook() {
+    //   this.$store
+    //     .dispatch('loginFacebook')
+    //     .then(() => {
+    //       // this.$router.push('/pictures')
+    //     })
+    //     .catch(() => {
+    //       this.$parent.socialLoginErrorMsg =
+    //         '現在Twitterでのログインは使用できません。後ほどお試しください。'
+    //   })
+    // },
     setPersistence() {
       return new Promise((resolve, reject) => {
         firebase

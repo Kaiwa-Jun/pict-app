@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <v-btn v-if="isCurrentUser" text @click="signOut" class="text-sm">ログアウト</v-btn> -->
     <v-card>
       <v-container>
         <v-row class="px-15 pt-5 pb-0">
@@ -13,7 +12,7 @@
                 </v-avatar>
               </div>
               <div v-else class="user-avatar">
-                <v-avatar color="primary" size="40">
+                <v-avatar size="40">
                   <img :src="user.photoURL">
                 </v-avatar>
               </div>
@@ -56,6 +55,7 @@
         </v-row>
           <br>
 
+<!-- プロフィール編集 -->
         <div class="text-center">
           <v-dialog
             v-if="isCurrentUser"
@@ -89,12 +89,13 @@
                     </v-avatar>
                   </div>
                   <v-card-text class="py-3">
-                    <v-btn
-                      color="blue darken-1"
-                      text  
+                    <el-upload
+                      action=""
+                      :show-file-list="false"
+                      :http-request="uploadFile"
                     >
-                    プロフィール写真を変更  
-                    </v-btn>
+                      <el-button class="editImage" type="primary">プロフィール写真を変更</el-button>
+                    </el-upload>
                   </v-card-text>
                 </div>
                 <v-row>
@@ -107,17 +108,17 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <v-row>
+                <!-- <v-row>
                   <v-col cols="4">
                     <v-subheader>自己紹介</v-subheader>
                   </v-col>
                   <v-col cols="7">
                     <v-textarea
                       rows="2"
-                    
+                      v-model="user.selfIntro"
                     ></v-textarea>
                   </v-col>
-                </v-row>
+                </v-row> -->
               <v-card-text>
                 <v-container>
 
@@ -145,10 +146,7 @@
       </v-container>
     </v-card> 
         
-    <v-footer
-      :absolute="fixed"
-      app
-    >
+    <v-footer app>
       <div class="bottom-navigation">
         <div class="nav-item">
           <nuxt-link to="/pictures"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
@@ -169,11 +167,22 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { db } from '~/plugins/firebase'
-import firebase from '~/plugins/firebase'
+import { db, firebase } from '~/plugins/firebase'
 import Post from '~/components/Post.vue'
 
 export default {
+  data () {
+    return {
+      dialog: false,
+      followingCount: '0',
+      followerCount: '0',
+      user: {
+        displayName: '',
+        photoURL: '',
+      },
+      posts: [],
+    }
+  },
   components: {
     Post
   },
@@ -190,24 +199,17 @@ export default {
       return this.$store.getters.isAuthenticated
     }
   },
-  data () {
-    return {
-      updateUser: true,
-      dialog: false,
-      followingCount: '0',
-      followerCount: '0',
-      user: {
-        displayName: '',
-        photoURL: '',
-      },
-      posts: [],
-    }
-  },
   async mounted() {
      const userId = this.$route.params.id
-       console.log(userId)
      const doc = await db.collection('users').doc(userId).get()
      this.user = doc.data()
+
+     const snapshot = await db.collection('posts').where('userId', '==', userId).get()
+     snapshot.forEach((doc) => {
+     this.posts.push({ id: doc.id, ...doc.data() })
+     })
+     this.fetchFollowingCount()
+     this.fetchFollowerCount()
    },
   methods: {
     ...mapActions(['signOut']),
@@ -221,48 +223,29 @@ export default {
       const snap = await db.collection('users').doc(userId).collection('followers').get()
       this.followerCount = snap.size
     },
-   },
-   async mounted() {
-     const userId = this.$route.params.id
-     const doc = await db.collection('users').doc(userId).get()
-     this.user = doc.data()
-
-     const snapshot = await db.collection('posts').where('userId', '==', userId).get()
-     snapshot.forEach((doc) => {
-       this.posts.push({ id: doc.id, ...doc.data() })
-     })
-     this.fetchFollowingCount()
-     this.fetchFollowerCount()
-   },
-  //  async updateUser() {
-  //    const db = firebase.firestore()
-  //    const userId = this.$route.params.id
-  //    console.log(userId)
-  //    await db.collection('users').doc(userId).update({
-  //       "displayName": this.user.displayName,
-  //       // "photoURL": this.user.photoURL
-  //     })
-  //     .then(()=> {
-  //       window.alert('保存されました')
-  //       dialog = false
-  //     })
-  //     .catch((error)=> {
-  //       console.log(error)
-  //     })
-  //   },
-  //  update () {
-  //    this.$store.dispatch('update', {displayName: this.user.displayName} )
-  //  },
-  //  async update() {
-  //     await db.collection('users').add({
-  //       selfIntro: this.user.selfIntro,
-  //     }).then(() => {
-  //       console.log('自己紹介を追加しました')
-  //     }).catch((error) => {
-  //       console.log('Error!')
-  //     })
-      
-  //   },
+    async updateUser() {
+      const userId = this.$route.params.id
+      await db.collection('users').doc(userId).set({
+         "displayName": this.user.displayName,
+         "photoURL": this.user.photoURL,
+       })
+       .then(()=> {
+         window.alert('保存されました')
+         dialog = false
+       })
+       .catch((error)=> {
+         console.log(error)
+       })
+    },
+    async uploadFile(data){
+      const storageRef = firebase.storage().ref()
+      const time = new Date().getTime()
+      const ref = storageRef.child(`posts/${time}_${data.file.name}`)
+      const snapshot = await ref.put(data.file)
+      const url = await snapshot.ref.getDownloadURL() //画像のURLの取得
+      this.user.photoURL = url
+    }
+  },
   }  
 </script>
 
@@ -271,14 +254,23 @@ export default {
   margin-top: 2px;
 }
 
-.user-avatar img{
-  width: 70px;
-}
 .user-avatar-sample img{
   width: 18px;
 }
+.user-avatar img{
+  width: 70px;
+}
 .modal-avatar-sample img{
   width: 25px;
+}
+.editImage {
+  color: rgb(0, 153, 255);
+  background-color: white;
+  border: none;
+  transition: all 0.3s ease 0s;
+}
+.editImage:hover {
+  background-color: rgb(223, 222, 222);
 }
 
 .bottom-navigation {

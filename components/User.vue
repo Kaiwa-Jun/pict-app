@@ -14,7 +14,7 @@
            </v-avatar>
          </div>
          <div v-else class="avatar">
-           <v-avatar color="primary" size="40">
+           <v-avatar size="40">
              <nuxt-link :to="`/users/${user.id}`">
               <img :src="user.photoURL" alt="">
              </nuxt-link>  
@@ -43,10 +43,7 @@
       </v-row>
       </v-container>
     </v-card>
-    <v-footer
-      :absolute="fixed"
-      app
-    >
+    <v-footer app>
       <div class="bottom-navigation">
         <div class="nav-item">
           <nuxt-link to="/pictures"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
@@ -116,7 +113,8 @@ export default {
   width: 20px;
 }
 .avatar img{
-  width: 40px;
+  width: 50px;
+  margin-top: 3px;
 }
 .user-name {
   margin-top: 15px;

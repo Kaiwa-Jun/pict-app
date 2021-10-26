@@ -25,9 +25,10 @@ export default {
       return this.$store.state.user
     },
   },
-  mounted () {
+  async mounted () {
     if (this.currentUser) {
       this.watchPostsChange()
+      
     }
   },
   watch: {

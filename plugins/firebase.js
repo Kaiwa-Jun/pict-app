@@ -20,6 +20,6 @@ export default firebase
 const db = firebase.firestore()
 
 export {
-  firebase ,
+  firebase,
   db
 }

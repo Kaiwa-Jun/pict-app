@@ -7,6 +7,7 @@ export const state = () => ({
     email: '',
     name: '',
     login: false,
+    photoURL: null
   },
 })
 
@@ -44,7 +45,7 @@ export const actions = {
    })
   },
   loginTwitter ({ dispatch }) {
-    var provider = new firebase.auth.TwitterAuthProvider()
+    const provider = new firebase.auth.TwitterAuthProvider()
     firebase.auth().signInWithPopup(provider)
     .then(function (result) {
       this.$router.push('/pictures')
@@ -52,11 +53,22 @@ export const actions = {
     }).catch(function (error) {
       console.log(error)
     })
-   },
+  },
+  loginFacebook ({ dispatch }) {
+    const provider = new firebase.auth.FacebookAuthProvider()
+    firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      this.$router.push('/pictures')
+      dispatch('checkLogin')
+    }).catch(function (error) {
+      console.log(error)
+    })
+  },
   checkLogin ({ commit }) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        commit('getData', { uid: user.uid, email: user.email, name: user.displayName })
+        console.log(user.photoURL)
+        commit('getData', { uid: user.uid, email: user.email, name: user.displayName, photoURL: user.photoURL })
         commit('switchLogin')
         db.collection('users').doc(user.uid).set({
           uid: user.uid,
@@ -128,6 +140,7 @@ export const mutations = {
   getData (state, payload) {
     state.user.uid = payload.uid
     state.user.email = payload.email
+    state.user.photoURL = payload.photoURL
   },
   switchLogin (state) {
     state.user.login = true

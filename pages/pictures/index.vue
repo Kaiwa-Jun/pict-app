@@ -1,10 +1,7 @@
 <template>
   <v-app>
       <pictures />
-      <v-footer
-      :absolute="fixed"
-      app
-    >
+      <v-footer app>
       <div class="bottom-navigation">
         <div class="nav-item">
           <nuxt-link to="/pictures"><img src="/images/home2.svg" class="h-6 my-3"></nuxt-link>

@@ -3,7 +3,7 @@
      
    <v-container>
      <v-row justify="center">
-       <v-col sm="12" md="5">
+       <v-col sm="5" md="5">
          <h2 class="text-center subtitle-1 font-weight-bold mb-2">
            メールアドレスでログイン
          </h2>

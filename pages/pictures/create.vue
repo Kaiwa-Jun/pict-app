@@ -4,35 +4,6 @@
       <h1>新規投稿</h1>
     </header>
     <div v-if="modalVisible" class="modal">
-      <!-- <div class="actions">
-        <div class="back-btn" @click="modalVisible = false">
-          <img src="/images/back.svg">
-        </div> 
-      </div> -->
-       <!-- <div class="modal_content">
-        <div class="post-image">
-          <img :src="imageUrl" class="uploaded-image">
-        </div>
-        <el-upload
-          v-if="!imageUrl"
-          action=""
-          :show-file-list="false"
-          :http-request="uploadFile"
-          >
-          <el-button size="small" type="primary">画像を選択(アイコンにしたい)</el-button>
-        </el-upload>
-        <el-input
-          type="textarea"
-          :rows="8"
-          placeholder="設定値の入力"
-          class="mt-8"
-          v-model="text"
-        >
-        </el-input>
-         <div class="post-btn" @click="post">
-          post
-        </div>
-      </div>  -->
 
       <v-card class="ImagePost">
         <v-container class="imageUpload">
@@ -47,13 +18,6 @@
           >
             <el-button class="custom-icon" type="primary" icon="el-icon-picture"></el-button>
           </el-upload>
-          <!-- <v-file-input
-            v-if="!imageUrl"
-            action=""
-            accept="image/*"
-            @change="uploadFile"
-            prepend-icon="mdi-camera"
-          ></v-file-input> -->
         </v-container>
 
         <v-card-text>
@@ -123,10 +87,7 @@
         </v-card-text>
       </v-card>
 
-      <v-footer
-      :absolute="fixed"
-      app
-    >
+      <v-footer app>
       <div class="bottom-navigation">
         <div class="nav-item">
           <nuxt-link to="/pictures"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
