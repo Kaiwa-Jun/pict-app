@@ -1,69 +1,47 @@
-# pict-app
+# PICTREAL
 
-## Build Setup
+## サービス概要
+初心者フォトグラファーに向けた、写真共有SNSサービスです！
 
-```bash
-# install dependencies
-$ npm install
+## このサービスを作った思い
+カメラを趣味にして最初の難関となるのが、シチュエーションに合わせたカメラの「設定」をすること。
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+私自身カメラを購入して間もない頃は、シチュエーションに合わせて設定をするのが難しかったです。
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+そこで本サービスでは、撮影した写真に加えて撮影時の設定値を投稿・共有することで、初心者フォトグラファーのスキルアップを手助けします。
 
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
-
-## Special Directories
-
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+## 登場人物
+写真撮影時の設定の仕方にまだ慣れていない人
 
 
-### `pages`
+## ユーザーが抱える問題
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
+想像通りの写真が撮れない
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
+シャッタースピード、ISO感度、F値など…
+それぞれをどう設定したらいいかわからない
 
-### `plugins`
+## 解決方法
 
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
+撮影した写真に加えて、設定値も投稿・共有することで、理想としている写真とその設定値を合わせて参照でき、撮影技術の向上を図ることができる。
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
+## 使用技術
+* JavaScript
+* Vue.js  4.5.13
+* Nuxt.js  2.15.7
+* Vuetify  2.5.5
+* Element UI  2.15.5
+* Firebase  9.16.0
+  * Authentication
+  * Cloud Firestore
+  * Hosting 
 
-### `static`
 
-This directory contains your static files. Each file inside this directory is mapped to `/`.
+## 機能一覧
+* アカウント登録/ログイン
+* 投稿の作成、編集、削除機能
+* いいね機能
+* フォロー機能
 
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
 
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
