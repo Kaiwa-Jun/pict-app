@@ -24,7 +24,7 @@
 
         <v-col class="" cols="3">
           <div v-if="!user.displayName" class="user-name">
-           <p>sample-userName</p>
+           <p>sampleName</p>
          </div>
          <div v-else class="user-name">
            <p>{{ user.displayName }}</p>

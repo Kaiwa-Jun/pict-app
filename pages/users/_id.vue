@@ -19,7 +19,7 @@
 
               <!-- ユーザネーム -->
               <v-card-text v-if="!user.photoURL" class="pt-3 pb-0">
-                sample-userName
+                sampleName
               </v-card-text>
               <v-card-text v-else class="pt-3 pb-0">
                 {{ user.displayName }}

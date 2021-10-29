@@ -19,7 +19,7 @@
          </div>
            
          <div v-if="!user.displayName" class="user-name">
-           <p>sample-userName</p>
+           <p>sampleName</p>
          </div>
          <div v-else class="user-name">
            <p>{{ user.displayName }}</p>
@@ -219,7 +219,8 @@ export default {
   margin-left: 130px;
   margin-top: 10px;
 }
-.avatar {
+
+.avatar-sample {
   float: left;
   width: 5%;
   margin-left: 130px;
@@ -228,6 +229,7 @@ export default {
 
 .avatar-sample img{
   width: 20px;
+  margin-top: 3px;
 }
 .avatar img{
   width: 55px;
@@ -245,7 +247,7 @@ export default {
   text-align: center;
 }
 .post-image img {
-  width: 70%;
+  width: 60%;
   height: auto;
 }
 

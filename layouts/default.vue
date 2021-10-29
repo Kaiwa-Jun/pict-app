@@ -56,16 +56,16 @@
       <div v-if="user.login">
         <div v-if="!user.photoURL" class="avatar-sample">
           <v-avatar color="light-blue accent-3" size="35">
-            <nuxt-link :to="`/users/${user.id}`">
+            <!-- <nuxt-link :to="`/users/${user.id}`"> -->
              <img src="/images/profile.svg">
-            </nuxt-link>  
+            <!-- </nuxt-link>   -->
           </v-avatar>
         </div>
         <div v-else class="avatar">
           <v-avatar color="primary" size="35">
-            <nuxt-link :to="`/users/${user.id}`">
+            <!-- <nuxt-link :to="`/users/${user.id}`"> -->
              <img :src="user.photoURL" alt="">
-            </nuxt-link>  
+            <!-- </nuxt-link>   -->
           </v-avatar>
         </div>
       </div>

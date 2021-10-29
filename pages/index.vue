@@ -52,6 +52,16 @@
           </v-btn>
         </div>
 
+        <v-row class="justify-center">
+          <v-btn 
+            class="my-15 white--text"
+            color="red darken-3"
+            @click="toDemo"
+          >
+            デモログインはこちら
+          </v-btn>
+        </v-row>
+
        </v-col>
      </v-row>
    </v-container>
@@ -96,7 +106,10 @@ export default {
    },
  },
  methods: {
-   ...mapActions(['signOut'])
+   ...mapActions(['signOut']),
+   toDemo () {
+      this.$router.push('/login/demoLogin')
+    },
  }
 }
 </script>

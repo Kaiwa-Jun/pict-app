@@ -4,6 +4,18 @@
    <v-container>
      <v-row justify="center">
        <v-col sm="5" md="5">
+          <v-row class="justify-center">
+            <v-btn 
+              class="my-15 white--text"
+              color="blue darken-3"
+              outlined
+              block
+              @click="toDemo"
+            >
+              デモログインはこちら
+            </v-btn>
+          </v-row>
+
          <h2 class="text-center subtitle-1 font-weight-bold mb-2">
            メールアドレスでログイン
          </h2>
@@ -103,11 +115,11 @@
          </v-row>
        </v-col>
      </v-row>
-  <p>uid: {{ user.uid }}</p>
+  <!-- <p>uid: {{ user.uid }}</p>
   <p>email: {{ user.email }}</p>
   <p>login: {{ user.login }}</p>  
   <p>user.name: {{ user.name }}</p>  
-  <p>ユーザーネーム: {{ user.displayName }}</p>  
+  <p>ユーザーネーム: {{ user.displayName }}</p>   -->
    </v-container>
 
 
@@ -119,13 +131,13 @@ import SocialLogin from '~/components/SocialLogin.vue'
 import firebase from '~/plugins/firebase'
 
 export default {
-  components: {
-    SocialLogin
+components: {
+  SocialLogin
+},
+computed: {
+  user () {
+    return this.$store.getters['user']
   },
-  computed: {
-   user () {
-     return this.$store.getters['user']
-   },
  },
  data () {
    return {
@@ -164,7 +176,10 @@ export default {
       .catch(() => {
         // An error happened.
       })
-  }
+   },
+   toDemo () {
+      this.$router.push('/login/demoLogin')
+    },
   //  setPersistence() {
   //    return new Promise((resolve, reject) => {
   //      firebase

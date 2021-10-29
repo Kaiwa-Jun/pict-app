@@ -8,7 +8,7 @@
       <v-card class="ImagePost">
         <v-container class="imageUpload">
           <div v-if="imageUrl">
-            <img :src="imageUrl">
+            <img :src="imageUrl" class="image">
           </div>
           <el-upload
             v-if="!imageUrl"
@@ -200,7 +200,9 @@ export default {
 .imageUpload {
   border-bottom: 1px solid;
 }
-
+.image {
+  width: 50%;
+}
 .custom-icon {
   font-size: 2rem;
   padding-right: 20px;
