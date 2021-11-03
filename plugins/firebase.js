@@ -1,6 +1,7 @@
 import firebase from "firebase/app"
-import 'firebase/auth';
+import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 if (!firebase.apps.length) {
 firebase.initializeApp({
@@ -14,4 +15,11 @@ firebase.initializeApp({
 })
 }
 
-export default firebase 
+export default firebase
+
+const db = firebase.firestore()
+
+export {
+  firebase,
+  db
+}

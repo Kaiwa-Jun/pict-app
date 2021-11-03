@@ -30,39 +30,62 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
+      <!-- <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
       >
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
+      </v-btn> -->
+      <!-- <v-btn
         icon
         @click.stop="clipped = !clipped"
       >
         <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
+      </v-btn> -->
+      <!-- <v-btn
         icon
         @click.stop="fixed = !fixed"
       >
         <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+      </v-btn> -->
+      <v-toolbar-title v-text="title" /> <!--Vuetifyの文字部分-->
       <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+
+
+      <!-- アイコン部分 -->
+      <div v-if="user.login">
+        <div v-if="!user.photoURL" class="avatar-sample">
+          <v-avatar color="light-blue accent-3" size="35">
+            <!-- <nuxt-link :to="`/users/${user.id}`"> -->
+             <img src="/images/profile.svg">
+            <!-- </nuxt-link>   -->
+          </v-avatar>
+        </div>
+        <div v-else class="avatar">
+          <v-avatar color="primary" size="35">
+            <!-- <nuxt-link :to="`/users/${user.id}`"> -->
+             <img :src="user.photoURL" alt="">
+            <!-- </nuxt-link>   -->
+          </v-avatar>
+        </div>
+      </div>
+
+       <p v-if="user.login" class="text" >
+         <v-btn 
+          text 
+          @click="signOut"
+          class="mt-4"
+         >
+          <img src="/images/log-out.svg" class="h-6 ">
+         </v-btn>
+       </p>
     </v-app-bar>
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
+    <!-- <v-navigation-drawer
       v-model="rightDrawer"
       :right="right"
       temporary
@@ -78,18 +101,55 @@
           <v-list-item-title>Switch drawer (click me)</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
-    <v-footer
-      :absolute="!fixed"
+    </v-navigation-drawer> -->
+    <!-- <app-footer /> -->
+    <!-- <v-footer
+      :absolute="fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+      <div class="bottom-navigation">
+        <div class="nav-item">
+          <nuxt-link to="/"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link to="/users"><img src="/images/follow.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+        <div class="nav-item" v-if="isAuthenticated">
+          <nuxt-link :to="`/users/${currentUser.uid}`"><img src="/images/profile.svg" class="h-6 my-3"></nuxt-link>
+        </div>
+      </div>
+    </v-footer> -->
   </v-app>
 </template>
 
 <script>
+import AppFooter from '~/components/Footer.vue'
+import { mapActions } from 'vuex'
+
 export default {
+  computed: {
+    user () {
+      return this.$store.getters['user']
+    },
+    currentUser () {
+      return this.$store.state.user
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
+    }
+  },
+  methods: {
+   ...mapActions(['signOut','checkLogin']),
+   toCreate () {
+     this.$router.push('/pictures/create')
+   },
+  },
+  components: {
+    AppFooter
+  },
+  mounted (){
+     this.$store.dispatch('checkLogin')
+  },
   data () {
     return {
       clipped: false,
@@ -102,36 +162,58 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-login-variant',
+          title: 'ログイン・アカウント作成',
+          to: '/login'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-timeline-outline',
           title: 'タイムライン',
           to: '/pictures'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'マイページ',
-          to: '/mypage'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: '新規作成',
+          icon: 'mdi-plus-box-outline',
+          title: '新規投稿',
           to: '/pictures/create'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'お問い合わせ',
-          to: '/inspire'
-        }
+          icon: 'mdi-account-multiple-outline',
+          title: 'ユーザーのフォロー',
+          to: '/users'
+        },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'お問い合わせ',
+        //   to: '/inquirles'
+        // }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'PICTREAL'
     }
   }
 }
 </script>
+
+<style scoped>
+.avatar-sample img{
+  width: 15px;
+  padding-top: 2px;
+}
+.avatar img{
+  width: 35px;
+}
+.bottom-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.nav-item {
+  width: calc(100% / 3 );
+  text-align: center;
+}
+
+</style>
