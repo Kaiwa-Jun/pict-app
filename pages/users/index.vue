@@ -11,6 +11,7 @@ import User from '~/components/User.vue'
 import { db } from "~/plugins/firebase"
 
 export default {
+  middleware: 'authenticated',
   data () {
     return {
       users: []

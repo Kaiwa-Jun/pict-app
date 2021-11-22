@@ -84,6 +84,7 @@ import { mapActions } from 'vuex'
 export default {
   data () {
       return {
+        clipped: false,
         items: [
           {
             src: '/images/img1.jpg',

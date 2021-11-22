@@ -111,7 +111,7 @@
 import { db, firebase } from '~/plugins/firebase'
 
 export default {
-  // middleware: 'authenticated',
+ middleware: 'authenticated',
   data () {
     return {
       dialog: false,

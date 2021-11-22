@@ -1,13 +1,56 @@
 <template>
   <div>
-    <v-card>
+    <v-card class="">
       <v-container>
-        <v-row class="px-15 pt-5 pb-0">
+        <v-row class="px-0 pt-5 pb-0" v-if="$vuetify.breakpoint.xs">
+          <v-col cols="3" class="text-center pa-0">
+            <div class="flex">
+              <!-- アイコン -->
+              <div v-if="!user.photoURL" class="user-avatar-sample">
+                <v-avatar size="40">
+                  <img src="/images/profile.svg">
+                </v-avatar>
+              </div>
+              <div v-else class="user-avatar">
+                <v-avatar size="40">
+                  <img :src="user.photoURL">
+                </v-avatar>
+              </div>
+
+              <!-- ユーザネーム -->
+              <!-- <v-card-text v-if="!user.photoURL" class="pt-3 pb-0">
+                sample
+              </v-card-text>
+              <v-card-text v-else class="pt-3 pb-0">
+                {{ user.displayName }}
+              </v-card-text> -->
+            </div>
+          </v-col>
+
+          <v-col cols="3" class="text-center pa-0">
+            投稿
+             <br>
+            <span class="text-xs">{{ posts.length }}</span>
+          </v-col>
+          
+          <v-col cols="3" class="text-center pa-0">
+            フォロー中
+            <br>
+            <span class="text-xs">{{ followingCount }}</span>
+          </v-col>
+
+          <v-col cols="3" class="text-center pa-0">
+            フォロワー
+            <br>
+            <span class="text-xs">{{ followerCount }}</span>          
+          </v-col>
+        </v-row>
+        <v-row class="px-15 pt-5 pb-0" v-if="!$vuetify.breakpoint.xs">
           <v-col cols="3" class="text-center">
             <div class="flex">
               <!-- アイコン -->
               <div v-if="!user.photoURL" class="user-avatar-sample">
-                <v-avatar color="light-blue accent-3" size="40">
+                <v-avatar size="40">
                   <img src="/images/profile.svg">
                 </v-avatar>
               </div>
@@ -19,7 +62,7 @@
 
               <!-- ユーザネーム -->
               <v-card-text v-if="!user.photoURL" class="pt-3 pb-0">
-                sampleName
+                sample
               </v-card-text>
               <v-card-text v-else class="pt-3 pb-0">
                 {{ user.displayName }}
@@ -46,13 +89,13 @@
           </v-col>
         </v-row>
 
-        <v-row class="px-15 py-0">
+        <!-- <v-row class="px-15 py-0">
           <v-col cols="6" class="text-left pl-12 py-0">
             <v-card-text class="width=60% py-0">
             {{ user.selfIntro }}
             </v-card-text>
           </v-col>
-        </v-row>
+        </v-row> -->
           <br>
 
 <!-- プロフィール編集 -->
@@ -64,9 +107,9 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                class="mb-10"
+                class="mb-5"
                 outlined
-                width="360"
+                width="70%"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -108,22 +151,6 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <!-- <v-row>
-                  <v-col cols="4">
-                    <v-subheader>自己紹介</v-subheader>
-                  </v-col>
-                  <v-col cols="7">
-                    <v-textarea
-                      rows="2"
-                      v-model="user.selfIntro"
-                    ></v-textarea>
-                  </v-col>
-                </v-row> -->
-              <v-card-text>
-                <v-container>
-
-                </v-container>
-              </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn

@@ -7,7 +7,7 @@
 
         <v-col class="mt-2" cols="3">
           <div v-if="!user.photoURL" class="avatar-sample">
-           <v-avatar color="light-blue accent-3" size="40">
+           <v-avatar size="40">
              <nuxt-link :to="`/users/${user.id}`">
               <img src="/images/profile.svg">
              </nuxt-link>  
@@ -24,7 +24,7 @@
 
         <v-col class="" cols="3">
           <div v-if="!user.displayName" class="user-name">
-           <p>sampleName</p>
+           <p>sample</p>
          </div>
          <div v-else class="user-name">
            <p>{{ user.displayName }}</p>

@@ -55,7 +55,7 @@
       <!-- アイコン部分 -->
       <div v-if="user.login">
         <div v-if="!user.photoURL" class="avatar-sample">
-          <v-avatar color="light-blue accent-3" size="35">
+          <v-avatar size="35">
             <!-- <nuxt-link :to="`/users/${user.id}`"> -->
              <img src="/images/profile.svg">
             <!-- </nuxt-link>   -->
@@ -85,40 +85,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <!-- <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer> -->
-    <!-- <app-footer /> -->
-    <!-- <v-footer
-      :absolute="fixed"
-      app
-    >
-      <div class="bottom-navigation">
-        <div class="nav-item">
-          <nuxt-link to="/"><img src="/images/home.svg" class="h-6 my-3"></nuxt-link>
-        </div>
-        <div class="nav-item" v-if="isAuthenticated">
-          <nuxt-link to="/users"><img src="/images/follow.svg" class="h-6 my-3"></nuxt-link>
-        </div>
-        <div class="nav-item" v-if="isAuthenticated">
-          <nuxt-link :to="`/users/${currentUser.uid}`"><img src="/images/profile.svg" class="h-6 my-3"></nuxt-link>
-        </div>
-      </div>
-    </v-footer> -->
+    
   </v-app>
 </template>
 
@@ -178,7 +145,7 @@ export default {
         },
         {
           icon: 'mdi-account-multiple-outline',
-          title: 'ユーザーのフォロー',
+          title: 'ユーザ一覧',
           to: '/users'
         },
         // {

@@ -22,11 +22,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-import AppFooter from '~/components/Footer.vue'
 import Pictures from '~/components/Posts.vue'
 
 export default {
-  // middleware: 'authenticated',
+ middleware: 'authenticated',
  components: {
    Pictures
  },
